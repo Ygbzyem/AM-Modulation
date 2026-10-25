@@ -1,0 +1,61 @@
+{
+  "formula": "round((2**(DW-1)-1)*sin(2*pi*(n+0.5)/2**AW))",
+  "encoding": "one two's-complement hexadecimal word per line; no header",
+  "quarter_reconstruction": "PASS at every address for every AW",
+  "tables": [
+    {
+      "file": "sine_full_AW8.mem",
+      "aw": 8,
+      "dw": 12,
+      "architecture": "FULL",
+      "entries": 256,
+      "logical_bits": 3072,
+      "sha256": "49f70357eb0945f3c821faa57d18d03837ec906d39db69be0138f7fcf9299168"
+    },
+    {
+      "file": "sine_quarter_AW8.mem",
+      "aw": 8,
+      "dw": 12,
+      "architecture": "QUARTER",
+      "entries": 64,
+      "logical_bits": 768,
+      "sha256": "faf0c41f5df4c8296ded99b501cb006b084f15068634c3ea321b853e7ec03d9d"
+    },
+    {
+      "file": "sine_full_AW10.mem",
+      "aw": 10,
+      "dw": 12,
+      "architecture": "FULL",
+      "entries": 1024,
+      "logical_bits": 12288,
+      "sha256": "ac0e7ea4ef99411749a0abd4352a1ccc5cb2caecc53bf93cb29dc46e9d25a0bf"
+    },
+    {
+      "file": "sine_quarter_AW10.mem",
+      "aw": 10,
+      "dw": 12,
+      "architecture": "QUARTER",
+      "entries": 256,
+      "logical_bits": 3072,
+      "sha256": "9e5b5a5ca85af11766a8a342fc85283840ae0a2c873a4f1975b59502695468b3"
+    },
+    {
+      "file": "sine_full_AW12.mem",
+      "aw": 12,
+      "dw": 12,
+      "architecture": "FULL",
+      "entries": 4096,
+      "logical_bits": 49152,
+      "sha256": "e787e31864f212294dd6495ff2453d976cfc7321fc05b7c938f2a1fb9e797c51"
+    },
+    {
+      "file": "sine_quarter_AW12.mem",
+      "aw": 12,
+      "dw": 12,
+      "architecture": "QUARTER",
+      "entries": 1024,
+      "logical_bits": 12288,
+      "sha256": "7c14d4df90f76645638a242e441a3e2b845da42a33d72275fb1f979b9d6421f6"
+    }
+  ]
+}
