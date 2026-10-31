@@ -1,15 +1,16 @@
 `timescale 1ns / 1ps
 
 module nco #(
-    parameter PW = 32,
-    parameter AW = 8,
-    parameter DW = 12,
-    parameter USE_QUARTER_ROM = 0,
+    parameter integer PW = 32,
+    parameter integer AW = 8,
+    parameter integer DW = 12,
+    parameter integer USE_QUARTER_ROM = 0,
     parameter FULL_MEM_FILE = "sine_full.mem",
     parameter QUARTER_MEM_FILE = "sine_quarter.mem"
 )(
     input  wire                 clk,
     input  wire                 rst,
+    input  wire                 en,
     input  wire [PW-1:0]        ftw,
     output wire signed [DW-1:0] sine
 );
@@ -26,11 +27,12 @@ module nco #(
     ) u_phase_acc (
         .clk   (clk),
         .rst   (rst),
+        .en    (en),
         .ftw   (ftw),
         .phase (phase)
     );
 
-    // Lua chon mot trong hai kien truc ROM
+    // Lua chon kien truc ROM
     generate
         if (USE_QUARTER_ROM != 0) begin : g_quarter_rom
             sine_rom_quarter #(
@@ -56,4 +58,3 @@ module nco #(
     endgenerate
 
 endmodule
-```

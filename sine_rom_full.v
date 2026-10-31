@@ -28,4 +28,3 @@ module sine_rom_full #(
     end
 
 endmodule
-```
