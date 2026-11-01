@@ -3,7 +3,7 @@
 module sine_rom_quarter #(
     parameter integer AW = 8,
     parameter integer DW = 12,
-    parameter MEM_FILE = "mem/sine_quarter_AW8.mem"
+    parameter MEM_FILE = "C:/GitHub/AM-Modulation/mem/sine_quarter_AW8.mem"
 )(
     input  wire                clk,
     input  wire [AW-1:0]       addr,
