@@ -7,8 +7,9 @@ AM_Modulation_Vivado/
 *.wdb
 .Xil/
 
-# simulation output
-results/*.txt
+# simulation and model output (regenerate with run_part_a.py)
+results/
+!results/.gitkeep
 golden_model/verification_logs/*.txt
 
 # Python
