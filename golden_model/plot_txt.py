@@ -1,10 +1,6 @@
 """Waveform, envelope, RTL comparison, and spectrum figures."""
 import argparse
 from pathlib import Path
-
-import matplotlib
-matplotlib.use("Agg")
-import matplotlib.pyplot as plt
 import numpy as np
 
 try:
@@ -18,6 +14,10 @@ except ImportError:
 
 
 def plot_waveform(samples, config, path, rows=None, rtl=None, title="AM reference model"):
+    import matplotlib
+    matplotlib.use("Agg")
+    import matplotlib.pyplot as plt
+    
     path = Path(path)
     path.parent.mkdir(parents=True, exist_ok=True)
     time_us = (np.arange(len(samples)) + config.start_sample) / config.clock_hz * 1e6
