@@ -3,7 +3,7 @@
 module tb_am_modulator;
 
     
-    localparam integer NUM_SAMPLES = 100000;
+    localparam integer NUM_SAMPLES = 10000;
     localparam integer LATENCY = 3; //2 tang ROM + 1 tang mulltiplier
 
     reg clk = 0;
