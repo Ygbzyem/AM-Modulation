@@ -1,0 +1,54 @@
+{
+  "samples": 10000,
+  "sample_rate_hz": 100000000,
+  "bin_width_hz": 10000.0,
+  "window": "periodic Hann; coherent-gain corrected; single-sided peak amplitude",
+  "guard_bins": 3,
+  "dc_treated_as_spur": true,
+  "reference_peak_amplitude": 1998.8282579669014,
+  "wanted_tones": [
+    {
+      "expected_hz": 1000000.0009313226,
+      "bin_hz": 1000000.0,
+      "peak_amplitude": 1998.8282579669014,
+      "bin": 100
+    }
+  ],
+  "sfdr_db": 48.16715762266686,
+  "largest_spur_hz": 45000000.0,
+  "largest_spur_amplitude": 7.805803231839397,
+  "limitation": "Windowed finite-record estimate; wanted bands excluded, including their in-band distortion. Noncoherent leakage may limit SFDR.",
+  "definition": "AM SFDR: strongest intended line / largest FFT bin outside intended-line guard bands",
+  "mu": 0.0,
+  "ideal_bandwidth_hz": 0.0,
+  "lines": [
+    {
+      "label": "lower_sideband",
+      "expected_hz": 980000.0116229057,
+      "measured_bin_hz": 980000.0,
+      "peak_amplitude": 2.939018972123168e-14,
+      "ratio_to_carrier": 1.4703709337752596e-17,
+      "ideal_ratio_to_carrier": 0.0,
+      "ratio_error": 1.4703709337752596e-17
+    },
+    {
+      "label": "carrier",
+      "expected_hz": 1000000.0009313226,
+      "measured_bin_hz": 1000000.0,
+      "peak_amplitude": 1998.8282579669014,
+      "ratio_to_carrier": 1.0,
+      "ideal_ratio_to_carrier": 1.0,
+      "ratio_error": 0.0
+    },
+    {
+      "label": "upper_sideband",
+      "expected_hz": 1019999.9902397394,
+      "measured_bin_hz": 1020000.0,
+      "peak_amplitude": 2.648550804628245e-14,
+      "ratio_to_carrier": 1.325051711707441e-17,
+      "ideal_ratio_to_carrier": 0.0,
+      "ratio_error": 1.325051711707441e-17
+    }
+  ],
+  "ratio_note": "Ratios are textbook mu/2 estimates; finite DW, shift-by-11 quantization and window detuning cause differences. DSB-SC ratios are undefined."
+}

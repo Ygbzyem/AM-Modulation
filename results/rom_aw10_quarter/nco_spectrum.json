@@ -1,0 +1,22 @@
+{
+  "samples": 10000,
+  "sample_rate_hz": 100000000,
+  "bin_width_hz": 10000.0,
+  "window": "periodic Hann; coherent-gain corrected; single-sided peak amplitude",
+  "guard_bins": 3,
+  "dc_treated_as_spur": true,
+  "reference_peak_amplitude": 2046.902543992326,
+  "wanted_tones": [
+    {
+      "expected_hz": 1000000.0009313226,
+      "bin_hz": 1000000.0,
+      "peak_amplitude": 2046.902543992326,
+      "bin": 100
+    }
+  ],
+  "sfdr_db": 60.66858003530122,
+  "largest_spur_hz": 25000000.0,
+  "largest_spur_amplitude": 1.895257238477143,
+  "limitation": "Windowed finite-record estimate; wanted bands excluded, including their in-band distortion. Noncoherent leakage may limit SFDR.",
+  "definition": "Carrier NCO SFDR: fundamental / largest FFT bin outside fundamental guard band"
+}

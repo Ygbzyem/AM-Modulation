@@ -1,0 +1,26 @@
+{
+  "config": {
+    "clock_hz": 100000000,
+    "pw": 32,
+    "aw": 12,
+    "dw": 12,
+    "ftw_car": 42949673,
+    "ftw_msg": 858993,
+    "amp_car": 2000,
+    "amp_msg": 1000,
+    "samples": 10000,
+    "rom_arch": "FULL",
+    "initial_phase_car": 0,
+    "initial_phase_msg": 0,
+    "start_sample": 0
+  },
+  "sample_contract": "address uses phase[n] before increment; phase[n]=(initial+n*FTW) mod 2**PW; no reset/pipeline warm-up samples",
+  "fc_hz": 1000000.0009313226,
+  "fm_hz": 19999.989308416843,
+  "mu": 0.5,
+  "mode": "AM",
+  "env_min": 1000,
+  "env_max": 2999,
+  "out_min": -2998,
+  "out_max": 2997
+}
