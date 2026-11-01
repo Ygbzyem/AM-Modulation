@@ -17,7 +17,7 @@ def plot_waveform(samples, config, path, rows=None, rtl=None, title="AM referenc
     import matplotlib
     matplotlib.use("Agg")
     import matplotlib.pyplot as plt
-    
+
     path = Path(path)
     path.parent.mkdir(parents=True, exist_ok=True)
     time_us = (np.arange(len(samples)) + config.start_sample) / config.clock_hz * 1e6
@@ -44,6 +44,10 @@ def plot_waveform(samples, config, path, rows=None, rtl=None, title="AM referenc
 
 
 def plot_spectrum(samples, config, path, title="Golden model spectrum"):
+    import matplotlib
+    matplotlib.use("Agg")
+    import matplotlib.pyplot as plt
+    
     path = Path(path)
     path.parent.mkdir(parents=True, exist_ok=True)
     frequencies, amplitudes = fft_amplitude(samples, config.clock_hz)
