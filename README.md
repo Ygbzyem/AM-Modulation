@@ -112,7 +112,7 @@ multiplier in the same cycle as the envelope, which costs one register stage.*
 │   ├── am_envelope.v             #   amp_car + (amp_msg * msg >>> 11)
 │   ├── am_multiplier.v           #   (env * car) >>> 11
 │   └── am_modulator_top.v        #   top level: 2 NCOs + envelope + multiplier
-├── techbench/                    # testbenches
+├── tb/                           # testbenches
 │   ├── tb_am_top.v               #   self-checking, parameters hard-coded in the file
 │   └── tb_am_top_filebased.v     #   parameters from the command line, writes a sample file
 ├── golden_model/                 # Python reference model and automatic comparison
