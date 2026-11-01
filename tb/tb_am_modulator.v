@@ -1,6 +1,9 @@
 
 `timescale 1ns / 1ps
 
+localparam integer NUM_SAMPLES = 100000;
+localparam integer LATENCY = 3 //2 tang ROM + 1 tang mulltiplier
+
 module tb_am_modulator;
 
     reg clk = 0;
@@ -17,7 +20,7 @@ module tb_am_modulator;
 
     always #5 clk = ~clk;
 
-    top_module u_dut (
+    am_modulator_top u_dut (
         .clk(clk),
         .rst(rst),
         .ftw_car(ftw_car),
@@ -54,7 +57,7 @@ module tb_am_modulator;
         @(negedge clk);
         rst = 0;
 
-        for (i = 0; i < 10000; i = i + 1) begin
+        for (i = 0; i < NUM_SAMPLES + LATENCY; i = i + 1) begin
             @(posedge clk);
             #1;
             $fwrite(fp, "%0d\n", $signed(am_out));
