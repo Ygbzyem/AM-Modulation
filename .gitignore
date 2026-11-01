@@ -1,2 +1,16 @@
-vivado/
+# Vivado project (machine-specific, regenerate locally)
+AM_Modulation_Vivado/
+*.jou
+*.log
+*.str
+*.pb
+*.wdb
+.Xil/
+
+# simulation output
 results/*.txt
+golden_model/verification_logs/*.txt
+
+# Python
+__pycache__/
+*.pyc
