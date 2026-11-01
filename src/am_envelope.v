@@ -1,3 +1,4 @@
+`timescale 1ns / 1ps
 // AM envelope generator, Q11 fixed-point datapath.
 // amp_car and amp_msg are non-negative magnitude controls.
 module am_envelope #(

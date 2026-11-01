@@ -3,7 +3,7 @@
 module sine_rom_full #(
     parameter AW = 8,
     parameter DW = 12,
-    parameter MEM_FILE = "sine_full.mem"
+    parameter MEM_FILE = "mem/sine_full_AW8.mem"
 )(
     input  wire                clk,
     input  wire [AW-1:0]       addr,

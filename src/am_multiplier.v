@@ -1,3 +1,4 @@
+`timescale 1ns / 1ps
 // Final AM product, Q11 fixed-point datapath.
 module am_multiplier #(
     parameter DW = 12,
