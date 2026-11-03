@@ -1,10 +1,10 @@
 Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
 -------------------------------------------------------------------------------------------------------------
 | Tool Version     : Vivado v.2020.2 (win64) Build 3064766 Wed Nov 18 09:12:45 MST 2020
-| Date             : Wed Nov  4 01:08:11 2026
+| Date             : Wed Nov  4 02:24:39 2026
 | Host             : AnhBaChaCu running 64-bit major release  (build 9200)
 | Command          : report_power -file C:/GitHub/AM-Modulation/results/synth/aw12_quarter/power.rpt
-| Design           : nco
+| Design           : am_modulator_top
 | Device           : xc7a35tcpg236-1
 | Design State     : routed
 | Grade            : commercial
@@ -30,14 +30,14 @@ Table of Contents
 ----------
 
 +--------------------------+--------------+
-| Total On-Chip Power (W)  | 0.085        |
+| Total On-Chip Power (W)  | 0.095        |
 | Design Power Budget (W)  | Unspecified* |
 | Power Budget Margin (W)  | NA           |
-| Dynamic (W)              | 0.015        |
+| Dynamic (W)              | 0.025        |
 | Device Static (W)        | 0.070        |
 | Effective TJA (C/W)      | 5.0          |
-| Max Ambient (C)          | 84.6         |
-| Junction Temperature (C) | 25.4         |
+| Max Ambient (C)          | 84.5         |
+| Junction Temperature (C) | 25.5         |
 | Confidence Level         | Low          |
 | Setting File             | ---          |
 | Simulation Activity File | ---          |
@@ -52,17 +52,18 @@ Table of Contents
 +----------------+-----------+----------+-----------+-----------------+
 | On-Chip        | Power (W) | Used     | Available | Utilization (%) |
 +----------------+-----------+----------+-----------+-----------------+
-| Clocks         |    <0.001 |        3 |       --- |             --- |
-| Slice Logic    |    <0.001 |      117 |       --- |             --- |
-|   LUT as Logic |    <0.001 |       49 |     20800 |            0.24 |
-|   CARRY4       |    <0.001 |       11 |      8150 |            0.13 |
-|   Register     |    <0.001 |       47 |     41600 |            0.11 |
-|   Others       |     0.000 |        5 |       --- |             --- |
-| Signals        |    <0.001 |      113 |       --- |             --- |
-| Block RAM      |     0.001 |      0.5 |        50 |            1.00 |
-| I/O            |     0.012 |       47 |       106 |           44.34 |
+| Clocks         |     0.001 |        3 |       --- |             --- |
+| Slice Logic    |     0.001 |      238 |       --- |             --- |
+|   LUT as Logic |    <0.001 |      108 |     20800 |            0.52 |
+|   CARRY4       |    <0.001 |       26 |      8150 |            0.32 |
+|   Register     |    <0.001 |       78 |     41600 |            0.19 |
+|   Others       |     0.000 |       16 |       --- |             --- |
+| Signals        |     0.002 |      287 |       --- |             --- |
+| Block RAM      |     0.002 |      0.5 |        50 |            1.00 |
+| DSPs           |     0.002 |        2 |        90 |            2.22 |
+| I/O            |     0.016 |      106 |       106 |          100.00 |
 | Static Power   |     0.070 |          |           |                 |
-| Total          |     0.085 |          |           |                 |
+| Total          |     0.095 |          |           |                 |
 +----------------+-----------+----------+-----------+-----------------+
 
 
@@ -72,11 +73,11 @@ Table of Contents
 +-----------+-------------+-----------+-------------+------------+-------------+-------------+------------+
 | Source    | Voltage (V) | Total (A) | Dynamic (A) | Static (A) | Powerup (A) | Budget (A)  | Margin (A) |
 +-----------+-------------+-----------+-------------+------------+-------------+-------------+------------+
-| Vccint    |       1.000 |     0.013 |       0.003 |      0.010 |       NA    | Unspecified | NA         |
+| Vccint    |       1.000 |     0.019 |       0.009 |      0.010 |       NA    | Unspecified | NA         |
 | Vccaux    |       1.800 |     0.014 |       0.001 |      0.013 |       NA    | Unspecified | NA         |
 | Vcco33    |       3.300 |     0.000 |       0.000 |      0.000 |       NA    | Unspecified | NA         |
 | Vcco25    |       2.500 |     0.000 |       0.000 |      0.000 |       NA    | Unspecified | NA         |
-| Vcco18    |       1.800 |     0.006 |       0.005 |      0.001 |       NA    | Unspecified | NA         |
+| Vcco18    |       1.800 |     0.008 |       0.007 |      0.001 |       NA    | Unspecified | NA         |
 | Vcco15    |       1.500 |     0.000 |       0.000 |      0.000 |       NA    | Unspecified | NA         |
 | Vcco135   |       1.350 |     0.000 |       0.000 |      0.000 |       NA    | Unspecified | NA         |
 | Vcco12    |       1.200 |     0.000 |       0.000 |      0.000 |       NA    | Unspecified | NA         |
@@ -138,12 +139,16 @@ Table of Contents
 3.1 By Hierarchy
 ----------------
 
-+----------------------------+-----------+
-| Name                       | Power (W) |
-+----------------------------+-----------+
-| nco                        |     0.015 |
-|   g_quarter_rom.u_sine_rom |     0.002 |
-|   u_phase_acc              |     0.001 |
-+----------------------------+-----------+
++------------------------------+-----------+
+| Name                         | Power (W) |
++------------------------------+-----------+
+| am_modulator_top             |     0.025 |
+|   u_car                      |     0.002 |
+|   u_env                      |     0.001 |
+|   u_msg                      |     0.004 |
+|     g_quarter_rom.u_sine_rom |     0.003 |
+|     u_phase_acc              |     0.001 |
+|   u_mul                      |     0.002 |
++------------------------------+-----------+
 
 

@@ -1,10 +1,10 @@
 Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
 ------------------------------------------------------------------------------------------------------------
 | Tool Version : Vivado v.2020.2 (win64) Build 3064766 Wed Nov 18 09:12:45 MST 2020
-| Date         : Wed Nov  4 01:02:23 2026
+| Date         : Wed Nov  4 02:18:59 2026
 | Host         : AnhBaChaCu running 64-bit major release  (build 9200)
 | Command      : report_utilization -file C:/GitHub/AM-Modulation/results/synth/aw8_quarter/utilization.rpt
-| Design       : nco
+| Design       : am_modulator_top
 | Device       : 7a35tcpg236-1
 | Design State : Routed
 ------------------------------------------------------------------------------------------------------------
@@ -31,11 +31,11 @@ Table of Contents
 +-------------------------+------+-------+-----------+-------+
 |        Site Type        | Used | Fixed | Available | Util% |
 +-------------------------+------+-------+-----------+-------+
-| Slice LUTs              |   56 |     0 |     20800 |  0.27 |
-|   LUT as Logic          |   56 |     0 |     20800 |  0.27 |
+| Slice LUTs              |  124 |     0 |     20800 |  0.60 |
+|   LUT as Logic          |  124 |     0 |     20800 |  0.60 |
 |   LUT as Memory         |    0 |     0 |      9600 |  0.00 |
-| Slice Registers         |   56 |     0 |     41600 |  0.13 |
-|   Register as Flip Flop |   56 |     0 |     41600 |  0.13 |
+| Slice Registers         |  100 |     0 |     41600 |  0.24 |
+|   Register as Flip Flop |  100 |     0 |     41600 |  0.24 |
 |   Register as Latch     |    0 |     0 |     41600 |  0.00 |
 | F7 Muxes                |    0 |     0 |     16300 |  0.00 |
 | F8 Muxes                |    0 |     0 |      8150 |  0.00 |
@@ -57,7 +57,7 @@ Table of Contents
 | 0     |          Yes |           - |          Set |
 | 0     |          Yes |           - |        Reset |
 | 0     |          Yes |         Set |            - |
-| 56    |          Yes |       Reset |            - |
+| 100   |          Yes |       Reset |            - |
 +-------+--------------+-------------+--------------+
 
 
@@ -67,21 +67,21 @@ Table of Contents
 +--------------------------------------------+------+-------+-----------+-------+
 |                  Site Type                 | Used | Fixed | Available | Util% |
 +--------------------------------------------+------+-------+-----------+-------+
-| Slice                                      |   15 |     0 |      8150 |  0.18 |
-|   SLICEL                                   |   14 |     0 |           |       |
-|   SLICEM                                   |    1 |     0 |           |       |
-| LUT as Logic                               |   56 |     0 |     20800 |  0.27 |
+| Slice                                      |   35 |     0 |      8150 |  0.43 |
+|   SLICEL                                   |   22 |     0 |           |       |
+|   SLICEM                                   |   13 |     0 |           |       |
+| LUT as Logic                               |  124 |     0 |     20800 |  0.60 |
 |   using O5 output only                     |    0 |       |           |       |
-|   using O6 output only                     |   53 |       |           |       |
-|   using O5 and O6                          |    3 |       |           |       |
+|   using O6 output only                     |  118 |       |           |       |
+|   using O5 and O6                          |    6 |       |           |       |
 | LUT as Memory                              |    0 |     0 |      9600 |  0.00 |
 |   LUT as Distributed RAM                   |    0 |     0 |           |       |
 |   LUT as Shift Register                    |    0 |     0 |           |       |
-| Slice Registers                            |   56 |     0 |     41600 |  0.13 |
-|   Register driven from within the Slice    |   55 |       |           |       |
-|   Register driven from outside the Slice   |    1 |       |           |       |
-|     LUT in front of the register is unused |    0 |       |           |       |
-|     LUT in front of the register is used   |    1 |       |           |       |
+| Slice Registers                            |  100 |     0 |     41600 |  0.24 |
+|   Register driven from within the Slice    |   98 |       |           |       |
+|   Register driven from outside the Slice   |    2 |       |           |       |
+|     LUT in front of the register is unused |    2 |       |           |       |
+|     LUT in front of the register is used   |    0 |       |           |       |
 | Unique Control Sets                        |    2 |       |      8150 |  0.02 |
 +--------------------------------------------+------+-------+-----------+-------+
 * * Note: Available Control Sets calculated as Slice * 1, Review the Control Sets Report for more information regarding control sets.
@@ -103,38 +103,39 @@ Table of Contents
 4. DSP
 ------
 
-+-----------+------+-------+-----------+-------+
-| Site Type | Used | Fixed | Available | Util% |
-+-----------+------+-------+-----------+-------+
-| DSPs      |    0 |     0 |        90 |  0.00 |
-+-----------+------+-------+-----------+-------+
++----------------+------+-------+-----------+-------+
+|    Site Type   | Used | Fixed | Available | Util% |
++----------------+------+-------+-----------+-------+
+| DSPs           |    2 |     0 |        90 |  2.22 |
+|   DSP48E1 only |    2 |       |           |       |
++----------------+------+-------+-----------+-------+
 
 
 5. IO and GT Specific
 ---------------------
 
-+-----------------------------+------+-------+-----------+-------+
-|          Site Type          | Used | Fixed | Available | Util% |
-+-----------------------------+------+-------+-----------+-------+
-| Bonded IOB                  |   47 |     0 |       106 | 44.34 |
-|   IOB Master Pads           |   23 |       |           |       |
-|   IOB Slave Pads            |   23 |       |           |       |
-| Bonded IPADs                |    0 |     0 |        10 |  0.00 |
-| Bonded OPADs                |    0 |     0 |         4 |  0.00 |
-| PHY_CONTROL                 |    0 |     0 |         5 |  0.00 |
-| PHASER_REF                  |    0 |     0 |         5 |  0.00 |
-| OUT_FIFO                    |    0 |     0 |        20 |  0.00 |
-| IN_FIFO                     |    0 |     0 |        20 |  0.00 |
-| IDELAYCTRL                  |    0 |     0 |         5 |  0.00 |
-| IBUFDS                      |    0 |     0 |       104 |  0.00 |
-| GTPE2_CHANNEL               |    0 |     0 |         2 |  0.00 |
-| PHASER_OUT/PHASER_OUT_PHY   |    0 |     0 |        20 |  0.00 |
-| PHASER_IN/PHASER_IN_PHY     |    0 |     0 |        20 |  0.00 |
-| IDELAYE2/IDELAYE2_FINEDELAY |    0 |     0 |       250 |  0.00 |
-| IBUFDS_GTE2                 |    0 |     0 |         2 |  0.00 |
-| ILOGIC                      |    0 |     0 |       106 |  0.00 |
-| OLOGIC                      |    0 |     0 |       106 |  0.00 |
-+-----------------------------+------+-------+-----------+-------+
++-----------------------------+------+-------+-----------+--------+
+|          Site Type          | Used | Fixed | Available |  Util% |
++-----------------------------+------+-------+-----------+--------+
+| Bonded IOB                  |  106 |     0 |       106 | 100.00 |
+|   IOB Master Pads           |   51 |       |           |        |
+|   IOB Slave Pads            |   53 |       |           |        |
+| Bonded IPADs                |    0 |     0 |        10 |   0.00 |
+| Bonded OPADs                |    0 |     0 |         4 |   0.00 |
+| PHY_CONTROL                 |    0 |     0 |         5 |   0.00 |
+| PHASER_REF                  |    0 |     0 |         5 |   0.00 |
+| OUT_FIFO                    |    0 |     0 |        20 |   0.00 |
+| IN_FIFO                     |    0 |     0 |        20 |   0.00 |
+| IDELAYCTRL                  |    0 |     0 |         5 |   0.00 |
+| IBUFDS                      |    0 |     0 |       104 |   0.00 |
+| GTPE2_CHANNEL               |    0 |     0 |         2 |   0.00 |
+| PHASER_OUT/PHASER_OUT_PHY   |    0 |     0 |        20 |   0.00 |
+| PHASER_IN/PHASER_IN_PHY     |    0 |     0 |        20 |   0.00 |
+| IDELAYE2/IDELAYE2_FINEDELAY |    0 |     0 |       250 |   0.00 |
+| IBUFDS_GTE2                 |    0 |     0 |         2 |   0.00 |
+| ILOGIC                      |    0 |     0 |       106 |   0.00 |
+| OLOGIC                      |    0 |     0 |       106 |   0.00 |
++-----------------------------+------+-------+-----------+--------+
 
 
 6. Clocking
@@ -177,12 +178,13 @@ Table of Contents
 +----------+------+---------------------+
 | Ref Name | Used | Functional Category |
 +----------+------+---------------------+
-| FDRE     |   56 |        Flop & Latch |
-| LUT2     |   48 |                 LUT |
-| IBUF     |   35 |                  IO |
-| OBUF     |   12 |                  IO |
-| LUT6     |   11 |                 LUT |
-| CARRY4   |   11 |          CarryLogic |
+| LUT2     |  108 |                 LUT |
+| FDRE     |  100 |        Flop & Latch |
+| IBUF     |   90 |                  IO |
+| CARRY4   |   26 |          CarryLogic |
+| LUT6     |   22 |                 LUT |
+| OBUF     |   16 |                  IO |
+| DSP48E1  |    2 |    Block Arithmetic |
 | BUFG     |    1 |               Clock |
 +----------+------+---------------------+
 
