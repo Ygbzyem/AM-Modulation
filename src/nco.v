@@ -5,8 +5,8 @@ module nco #(
     parameter integer AW = 8,
     parameter integer DW = 12,
     parameter integer USE_QUARTER_ROM = 0,
-    parameter FULL_MEM_FILE    = "C:/GitHub/AM-Modulation/mem/sine_full_AW8.mem",
-    parameter QUARTER_MEM_FILE = "C:/GitHub/AM-Modulation/mem/sine_quarter_AW8.mem"
+    parameter FULL_MEM_FILE = "sine_full.mem",
+    parameter QUARTER_MEM_FILE = "sine_quarter.mem"
 )(
     input  wire                 clk,
     input  wire                 rst,

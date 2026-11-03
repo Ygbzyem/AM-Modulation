@@ -1,10 +1,7 @@
 
 `timescale 1ns / 1ps
-module tb_am_modulator;
 
-    
-    localparam integer NUM_SAMPLES = 10000;
-    localparam integer LATENCY = 3; //2 tang ROM + 1 tang mulltiplier
+module tb_am_modulator;
 
     reg clk = 0;
     reg rst = 1;
@@ -16,11 +13,11 @@ module tb_am_modulator;
 
     integer fp;
     integer i;
-    reg [1023:0] outfile;
+    reg [255:0] outfile;
 
     always #5 clk = ~clk;
 
-    am_modulator_top u_dut (
+    top_module u_dut (
         .clk(clk),
         .rst(rst),
         .ftw_car(ftw_car),
@@ -44,7 +41,7 @@ module tb_am_modulator;
             amp_msg = 12'd1000;
 
         if (!$value$plusargs("OUTFILE=%s", outfile))
-            outfile = "C:/GitHub/AM-Modulation/results/am_out.txt";
+            outfile = "results/am_out.txt";
 
         fp = $fopen(outfile, "w");
 
@@ -57,7 +54,7 @@ module tb_am_modulator;
         @(negedge clk);
         rst = 0;
 
-        for (i = 0; i < NUM_SAMPLES + LATENCY; i = i + 1) begin
+        for (i = 0; i < 10000; i = i + 1) begin
             @(posedge clk);
             #1;
             $fwrite(fp, "%0d\n", $signed(am_out));
@@ -65,7 +62,7 @@ module tb_am_modulator;
 
         $fclose(fp);
 
-        $display("Da ghi 10003 mau ra %0s", outfile);
+        $display("Da ghi 10000 mau ra %0s", outfile);
         $finish;
     end
 
