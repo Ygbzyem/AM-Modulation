@@ -7,21 +7,23 @@ module am_modulator_top #(
     parameter integer DW = 12,
     parameter integer OW = 16,
     parameter integer USE_QUARTER_ROM = 0,
-    parameter FULL_MEM_FILE    = "C:/GitHub/AM-Modulation/mem/sine_full_AW8.mem",
-    parameter QUARTER_MEM_FILE = "C:/GitHub/AM-Modulation/mem/sine_quarter_AW8.mem"
+
+    parameter FULL_MEM_FILE = "model/mem/sine_full_aw8.mem",
+    parameter QUARTER_MEM_FILE = "model/mem/sine_quarter_aw8.mem"
 )(
     input wire clk,
     input wire rst,
 
     input wire [PW-1:0] ftw_car,
     input wire [PW-1:0] ftw_msg,
+
     input wire [DW-1:0] amp_car,
     input wire [DW-1:0] amp_msg,
 
     output wire signed [OW-1:0] am_out
 );
 
-wire signed [DW-1:0] car;
+   wire signed [DW-1:0] car;
 wire signed [DW-1:0] msg;
 wire signed [DW-1:0] car_aligned;
 wire signed [DW+1:0] env;
