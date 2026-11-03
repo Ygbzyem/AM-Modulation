@@ -8,8 +8,8 @@ module am_modulator_top #(
     parameter integer OW = 16,
     parameter integer USE_QUARTER_ROM = 0,
 
-    parameter FULL_MEM_FILE = "model/mem/sine_full_aw8.mem",
-    parameter QUARTER_MEM_FILE = "model/mem/sine_quarter_aw8.mem"
+    parameter FULL_MEM_FILE = "model/mem/sine_full_AW8.mem",
+    parameter QUARTER_MEM_FILE = "model/mem/sine_quarter_AW8.mem"
 )(
     input wire clk,
     input wire rst,
