@@ -5,11 +5,29 @@ import re
 from pathlib import Path
 
 
+def read_header(path):
+    """Return the key=value pairs of a leading '# ...' header line, or {}."""
+    for raw in Path(path).read_text(encoding="utf-8-sig").splitlines():
+        text = raw.replace("\x00", "").strip()
+        if not text:
+            continue
+        if not text.startswith("#"):
+            return {}
+        fields = {}
+        for token in text[1:].split():
+            if "=" in token:
+                key, value = token.split("=", 1)
+                fields[key] = value
+        return fields
+    return {}
+
+
 def read_samples(path):
+    """Read one decimal sample per line; lines starting with '#' are comments."""
     values = []
     for line_number, raw in enumerate(Path(path).read_text(encoding="utf-8-sig").splitlines(), 1):
-        text = raw.strip()
-        if not text:
+        text = raw.replace("\x00", "").strip()
+        if not text or text.startswith("#"):
             continue
         if not re.fullmatch(r"[+-]?[0-9]+", text):
             raise ValueError(f"{path}:{line_number}: expected one decimal integer, got {text!r}")

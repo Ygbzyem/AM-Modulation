@@ -59,25 +59,26 @@ def run(output, plots=True):
             plot_waveform(samples, config, destination / "waveform.png", rows=rows, title=f"Python golden: {name}")
             plot_spectrum(samples, config, destination / "spectrum.png", title=f"Python golden: {name}")
         record = {"case": name, **metadata(config, rows), "python_full_quarter_equal": equal,
-                  "rtl_status": "NOT_RUN", "am_sfdr_db": spectrum["sfdr_db"],
+                  "am_sfdr_db": spectrum["sfdr_db"],
                   "nco_sfdr_db": nco_spectrum["sfdr_db"]}
         summary.append(record)
-        print(f"{name}: Python FULL=QUARTER; env {record['env_min']}..{record['env_max']}; AM SFDR {spectrum['sfdr_db']:.2f} dB; RTL NOT_RUN")
+        print(f"{name}: Python FULL=QUARTER; env {record['env_min']}..{record['env_max']}; AM SFDR {spectrum['sfdr_db']:.2f} dB")
     (output / "summary.json").write_text(json.dumps(summary, indent=2, allow_nan=False) + "\n", encoding="utf-8")
-    lines = ["# Part A Python results", "", "These are reference-model results, not RTL verification or implementation measurements.", "",
+    lines = ["# Golden model results", "", "These are reference-model results, not RTL verification or implementation measurements.", "",
              "All 6 ROMs reconstruct bit-exactly. All 13 Python FULL/QUARTER output pairs agree.", "",
              "SFDR uses a periodic Hann window, +/-3 FFT-bin exclusion per intended tone, and includes DC as a spur.",
              "AM excludes intended sidebands; NCO excludes only the fundamental. Both are finite-record estimates.", "",
-             "| Case | Env min | Env max | AM SFDR dB | NCO SFDR dB | RTL |", "|---|---:|---:|---:|---:|---|"]
+             "RTL-versus-golden results are in ../rtl/RTL_VERIFICATION.md.", "",
+             "| Case | Env min | Env max | AM SFDR dB | NCO SFDR dB |", "|---|---:|---:|---:|---:|"]
     for row in summary:
-        lines.append(f"| {row['case']} | {row['env_min']} | {row['env_max']} | {row['am_sfdr_db']:.2f} | {row['nco_sfdr_db']:.2f} | NOT_RUN |")
+        lines.append(f"| {row['case']} | {row['env_min']} | {row['env_max']} | {row['am_sfdr_db']:.2f} | {row['nco_sfdr_db']:.2f} |")
     (output / "SUMMARY.md").write_text("\n".join(lines) + "\n", encoding="utf-8")
     return summary
 
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--output-dir", type=Path, default=ROOT / "results" / "part_a")
+    parser.add_argument("--output-dir", type=Path, default=ROOT / "results" / "golden")
     parser.add_argument("--no-plots", action="store_true")
     args = parser.parse_args()
     run(args.output_dir, not args.no_plots)
