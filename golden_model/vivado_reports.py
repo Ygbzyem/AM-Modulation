@@ -98,10 +98,16 @@ def parse_power(path) -> dict:
     return out
 
 
+def report_design(path):
+    """Top-level design name in a Vivado report header ('| Design : am_modulator_top')."""
+    m = re.search(r"^\|\s*Design\s*:\s*(\S+)", Path(path).read_text(encoding="utf-8", errors="ignore"), re.M)
+    return m.group(1) if m else None
+
+
 def parse_impl_dir(directory) -> dict:
     """utilization.rpt and timing.rpt are required, power.rpt is optional."""
     directory = Path(directory)
-    result = {}
+    result = {"design": report_design(directory / "utilization.rpt")}
     result.update(parse_utilization(directory / "utilization.rpt"))
     timing = parse_timing(directory / "timing.rpt")
     result.update(timing)

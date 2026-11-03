@@ -49,6 +49,7 @@ FAIL_FILL = PatternFill("solid", fgColor="FFC7CE")
 SECTION_FILL = PatternFill("solid", fgColor="D9E1F2")
 THIN = Side(style="thin", color="BFBFBF")
 BOX = Border(left=THIN, right=THIN, top=THIN, bottom=THIN)
+TOP = "am_modulator_top"
 CONFIGS = [(aw, rom) for aw in (8, 10, 12) for rom in ("FULL", "QUARTER")]
 IMAGE_WIDTH = 620
 
@@ -109,9 +110,15 @@ def load_synth():
                           ROOT / "results" / "rpt" / f"AW{aw}_{rom}"):
             if (directory / "utilization.rpt").exists() and (directory / "timing.rpt").exists():
                 try:
-                    found[(aw, rom)] = {**parse_impl_dir(directory), "dir": directory}
+                    data = parse_impl_dir(directory)
                 except ValueError as error:
                     print(f"WARNING: {error}")
+                    break
+                if data.get("design") != TOP:
+                    print(f"WARNING: {directory.relative_to(ROOT)} reports design '{data.get('design')}', "
+                          f"not '{TOP}'. Set {TOP} as the synthesis top and rerun; skipped.")
+                    break
+                found[(aw, rom)] = {**data, "dir": directory}
                 break
     return found
 

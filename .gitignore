@@ -24,3 +24,6 @@ results/am_runs.*
 # Python
 __pycache__/
 *.pyc
+
+# Office lock files
+~$*
