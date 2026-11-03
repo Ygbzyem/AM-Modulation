@@ -1,0 +1,33 @@
+{
+  "index": null,
+  "case": "custom_fm5k",
+  "source": "custom",
+  "aw": 8,
+  "rom": "FULL",
+  "clock_hz": 100000000,
+  "ftw_car": 42949673,
+  "ftw_msg": 2147484,
+  "amp_car": 2000,
+  "amp_msg": 1000,
+  "samples": 40000,
+  "latency_dropped": 3,
+  "status": "PASS",
+  "env_min": 1000,
+  "env_max": 2999,
+  "golden_out_min": -2994,
+  "golden_out_max": 2993,
+  "rtl_out_min": -2994,
+  "rtl_out_max": 2993,
+  "sfdr_db": 48.072260276630566,
+  "figures": {
+    "waveform": "rtl_vs_golden.png",
+    "spectrum": "rtl_vs_golden_spectrum.png"
+  },
+  "n_golden": 40000,
+  "n_rtl": 40000,
+  "n_compared": 40000,
+  "mismatches": 0,
+  "max_abs_error": 0,
+  "first_mismatch": null,
+  "passed": true
+}

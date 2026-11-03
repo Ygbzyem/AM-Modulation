@@ -13,9 +13,9 @@
 # AW and the ROM type are hardware parameters, fixed before simulation
 # starts, so they cannot be set here (see the header of the testbench).
 
-CASE    = default
+CASE    = custom_fm5k
 FC_HZ   = 1000000
-FM_HZ   = 20000
+FM_HZ   = 50000
 AMP_CAR = 2000
 AMP_MSG = 1000
-SAMPLES = 10000
+SAMPLES = 40000
