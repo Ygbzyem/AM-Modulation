@@ -396,12 +396,12 @@ Vivado 2020.2, `xc7a35tcpg236-1`, 100 MHz clock constraint, results after place 
 
 | Config | LUT | LUTRAM | FF | BRAM (tiles) | DSP | WNS (ns) | Fmax (MHz) | Dynamic power (W) |
 |---|---:|---:|---:|---:|---:|---:|---:|---:|
-| `aw8_full` | | | | | | | | |
-| `aw8_quarter` | | | | | | | | |
-| `aw10_full` | | | | | | | | |
-| `aw10_quarter` | | | | | | | | |
-| `aw12_full` | | | | | | | | |
-| `aw12_quarter` | | | | | | | | |
+| `aw8_full` | 148 | 0 | 76 | 0.5 | 2 | 1.898 | 123.4 | 0.025 |
+| `aw8_quarter` | 124 | 0 | 100 | 0 | 2 | 2.401 | 131.6 | 0.023 |
+| `aw10_full` | 150 | 0 | 76 | 0.5 | 2 | 1.898 | 123.4 | 0.025 |
+| `aw10_quarter` | 106 | 0 | 78 | 0.5 | 2 | 2.507 | 133.5 | 0.025 |
+| `aw12_full` | 152 | 0 | 76 | 1.5 | 2 | 1.995 | 124.9 | 0.029 |
+| `aw12_quarter` | 108 | 0 | 78 | 0.5 | 2 | 2.507 | 133.5 | 0.025 |
 
 **Full vs quarter-wave ROM.**
 
