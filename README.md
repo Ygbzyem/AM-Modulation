@@ -1,16 +1,16 @@
 # AM Modulator — Verilog RTL Project
 
-A fully pipelined **amplitude modulator (DSB-FC)** in Verilog, built around two hand-written
-numerically controlled oscillators (NCOs). It compares a **full-wave** and a **quarter-wave** sine
-ROM at three table sizes, verifies the RTL bit-for-bit against a Python golden model, and reports
-Vivado resource and timing results for every configuration.
+A fully pipelined **amplitude modulator (DSB-FC)** in Verilog, built around two hand-written numerically
+controlled oscillators (NCOs). It compares a **full-wave** and a **quarter-wave** sine ROM at three table sizes,
+verifies the RTL bit-for-bit against a Python golden model, and reports Vivado resource and timing results for
+every configuration.
 
 | | |
 |---|---|
 | Design | 7 RTL modules, 32-bit phase accumulators, 12-bit sine tables, Q11 fixed-point datapath, 16-bit signed output |
 | Self-checking testbench | **7 / 7** checks pass in Vivado XSIM (`tb_am_top`), see [Section 8.1](#81-testbenches) |
 | Golden model | **18 / 18** regression cases bit-exact (10 000 samples each), plus custom runs, see [Section 8.3](#83-regression-results) |
-| Arithmetic | Overflow impossible for every legal input, proven exhaustively, see [Section 6.3](#63-word-widths-and-overflow) |
+| Arithmetic | Overflow impossible for every legal input, proven exhaustively, see [Section 6](#6-datapath-and-pipeline) |
 | Spectral purity | SFDR 48.1 / 60.7 / 71.9 dB for AW = 8 / 10 / 12, identical for full and quarter ROM, see [Section 10](#10-spectral-results) |
 | Synthesis | Vivado 2020.2, Artix-7 `xc7a35tcpg236-1`, 100 MHz, see [Section 9](#9-synthesis-results) |
 
@@ -23,16 +23,15 @@ Vivado resource and timing results for every configuration.
 3. [Block Diagram](#3-block-diagram)
 4. [Repository Structure](#4-repository-structure)
 5. [Module Index](#5-module-index)
-6. [Fixed-Point Datapath and Pipeline](#6-fixed-point-datapath-and-pipeline)
-7. [Interface Specification](#7-interface-specification)
+6. [Datapath and Pipeline](#6-datapath-and-pipeline)
+7. [Interface Specifications](#7-interface-specifications)
 8. [Verification](#8-verification)
 9. [Synthesis Results](#9-synthesis-results)
 10. [Spectral Results](#10-spectral-results)
-11. [Running the Project in Vivado](#11-running-the-project-in-vivado)
-12. [Limitations](#12-limitations)
-13. [Future Work](#13-future-work)
-14. [References](#14-references)
-15. [License](#15-license)
+11. [Limitations](#11-limitations)
+12. [Future Work](#12-future-work)
+13. [References](#13-references)
+14. [License](#14-license)
 
 ---
 
@@ -45,19 +44,21 @@ pip install -r requirements.txt          # numpy, matplotlib, openpyxl
 python -m unittest discover -s tests     # 24 tests -> OK
 ```
 
-You need **Python 3.8+** and **Vivado 2020.2** (XSIM). Keep the repository in a folder whose path
-contains only ASCII characters; Vivado cannot open project paths with accented characters.
+You need **Python 3.8+** and **Vivado 2020.2**. Keep the repository in a folder whose path contains only ASCII
+characters; Vivado cannot open project paths with accented characters.
 
-The whole flow runs from the Vivado GUI, with Python only for the comparison afterwards:
+Everything runs from the Vivado GUI, with Python only for the comparison afterwards:
 
 ```text
+Vivado: tb_am_top             -> RESULT: 7/7 PASS in the Tcl console
 Vivado: tb_am_regression      -> python golden_model/verify_rtl.py    -> results/rtl/
 Vivado: tb_am_top_filebased   -> python golden_model/check_result.py  -> results/custom/
 Vivado: synthesis loop        -> results/synth/<config>/*.rpt
                                  python golden_model/make_excel.py    -> results/results.xlsx
 ```
 
-The one-time project setup is in [Section 11](#11-running-the-project-in-vivado).
+The full guide, including the one-time project setup, the waveform view and the synthesis loop, is in
+**[docs/SIMULATION.md](docs/SIMULATION.md)**.
 
 ---
 
@@ -69,43 +70,39 @@ $$
 s(t) = A_c \left[1 + \mu \sin(2\pi f_m t)\right] \sin(2\pi f_c t), \qquad \mu = \frac{A_m}{A_c}
 $$
 
-The spectrum holds the carrier at $f_c$ and two sidebands at $f_c \pm f_m$, each with amplitude
-$\mu A_c / 2$. With $\mu \le 1$ the envelope never crosses zero (DSB-FC); with $\mu > 1$ the signal is
-overmodulated; with $A_c = 0$ only the sidebands remain (DSB-SC).
+The spectrum holds the carrier at $f_c$ and two sidebands at $f_c \pm f_m$, each with amplitude $\mu A_c / 2$.
+With $\mu \le 1$ the envelope never crosses zero (DSB-FC); with $\mu > 1$ the signal is overmodulated; with
+$A_c = 0$ only the sidebands remain (DSB-SC).
 
 The design builds this signal in three stages, all in integer arithmetic:
 
-1. **Two NCOs** generate the carrier and the message. Each is a 32-bit phase accumulator
-   (`phase += FTW` every clock) whose top `AW` bits address a sine table. The output frequency is
+1. **Two NCOs** generate the carrier and the message. Each is a 32-bit phase accumulator (`phase += FTW` every
+   clock) whose top `AW` bits address a sine table. The output frequency is
    $f = \text{FTW} \cdot f_\text{clk} / 2^{32}$, a resolution of 0.023 Hz at 100 MHz.
 2. **The envelope** `env = amp_car + (amp_msg · msg) >> 11` is formed from the message sample.
 3. **The multiplier** produces `am_out = (env · car) >> 11`.
 
-Every stage is registered, so the critical path is a single multiply. Carrier frequency, message
-frequency and both amplitudes are run-time inputs; the table size `AW` and the ROM architecture are
-elaboration-time parameters.
+Every stage is registered, so the critical path is a single multiply. Carrier frequency, message frequency and
+both amplitudes are run-time inputs; the table size `AW` and the ROM architecture are elaboration-time
+parameters.
 
-**Full-wave vs quarter-wave ROM.** A full-wave ROM stores one complete sine period ($2^{AW}$ words).
-A quarter-wave ROM stores only the first quarter ($2^{AW-2}$ words) and rebuilds the rest from the
-symmetry of the sine: the second address bit mirrors the address, the first one negates the output.
-It needs a quarter of the memory at the cost of a small amount of extra logic. Both architectures
-produce **identical samples** at every address; the trade-off is purely in hardware cost
-([Section 9](#9-synthesis-results)).
+**Full-wave vs quarter-wave ROM.** A full-wave ROM stores one complete sine period ($2^{AW}$ words). A
+quarter-wave ROM stores only the first quarter ($2^{AW-2}$ words) and rebuilds the rest from the symmetry of the
+sine: one address bit mirrors the address, the other negates the output. It needs a quarter of the memory at the
+cost of a little extra logic. Both architectures produce **identical samples** at every address; the trade-off
+is purely in hardware cost ([Section 9](#9-synthesis-results)).
 
 ---
 
 ## 3. Block Diagram
 
-<!--
-  Replace docs/figures/block_diagram.png with the final diagram (keep the file name,
-  or change the path below). Recommended width: 1200-1600 px, PNG with a white background.
--->
+![AM modulator system block diagram](image/Project_diagram.png)
 
-![AM modulator block diagram](docs/figures/block_diagram.png)
-
-*Data flow: `ftw_car` → carrier NCO (`phase_acc` → sine ROM, 2 stages) → `car_d1` delay →
-`am_multiplier`; `ftw_msg` → message NCO → `am_envelope` (with `amp_car`, `amp_msg`) →
-`am_multiplier` → `am_out`.*
+*Data flow: `ftw_car` → carrier NCO (`phase_acc` → sine ROM, 2 stages) → `car_d1` (1-clock delay) →
+`am_multiplier`; `ftw_msg` → message NCO → `am_envelope` (with `amp_car`, `amp_msg`) → `am_multiplier` →
+`am_out`. `clk` and `rst` go to every block. The block diagram of each module is in
+[Section 7](#7-interface-specifications); the editable source of all diagrams is
+[image/block_diagrams.drawio](image/block_diagrams.drawio).*
 
 ---
 
@@ -122,31 +119,35 @@ produce **identical samples** at every address; the trade-off is purely in hardw
 │   ├── am_envelope.v             #   amp_car + (amp_msg * msg) >> 11
 │   └── am_multiplier.v           #   (env * car) >> 11
 ├── tb/                           # testbenches
-│   ├── tb_am_top.v               #   self-checking, 7 checks, used for the live demo
-│   ├── tb_am_top_filebased.v     #   one configuration from tb/am_config.txt, writes am_out.txt
+│   ├── tb_am_top.v               #   self-checking, 7 checks, live demo
+│   ├── tb_am_top_filebased.v     #   one configuration from am_config.txt, writes am_out.txt
 │   ├── tb_am_regression.v        #   all 18 cases in one run, writes rtl_case01..18.txt
 │   ├── am_config.txt             #   stimulus for tb_am_top_filebased (edit and rerun)
 │   └── tb_am_top_behav.wcfg      #   Vivado waveform layout for the demo
-├── mem/                          # sine tables, AW = 8/10/12, full and quarter, + manifest.json
-├── constraint/constraints.xdc    # 100 MHz clock, false paths on quasi-static inputs
 ├── golden_model/                 # Python reference model and comparison tools
 │   ├── am_golden.py              #   bit-exact integer model of the datapath
 │   ├── gen_sine_rom.py           #   generates mem/*.mem
 │   ├── spectrum.py               #   FFT, SFDR and sideband measurement
-│   ├── run_part_a.py             #   golden-only results for the 13 base cases
 │   ├── verify_rtl.py             #   RTL vs golden for the 18 regression cases + figures
 │   ├── check_result.py           #   RTL vs golden for one tb_am_top_filebased run
 │   ├── make_excel.py             #   builds results/results.xlsx
-│   └── vivado_reports.py         #   parses utilization / timing / power reports
+│   └── vivado_reports.py, ...    #   report parser and helpers
+├── mem/                          # sine tables, AW = 8/10/12, full and quarter, + manifest.json
+├── constraint/constraints.xdc    # 100 MHz clock, false paths on quasi-static inputs
 ├── tests/                        # 24 Python unit tests
 ├── results/
-│   ├── golden/                   #   golden model outputs, waveforms, spectra, SUMMARY.md
 │   ├── rtl/                      #   RTL vs golden: RTL_VERIFICATION.md, one folder per case
 │   ├── custom/                   #   RTL vs golden for each custom tb_am_top_filebased run
-│   ├── sim/                      #   Vivado waveform and console screenshots
+│   ├── sim/                      #   Vivado waveform screenshots
 │   ├── synth/                    #   utilization, timing and power reports, 6 configurations
 │   └── results.xlsx              #   everything above in one workbook
-├── docs/                         # project report, slides, theory notes, figures
+├── image/                        # block diagrams: system, 7 modules, editable .drawio source
+├── docs/
+│   ├── SIMULATION.md             #   simulation and synthesis guide
+│   ├── am_modulator_top.md       #   datapath, pipeline and fixed-point notes
+│   ├── DGT201_IC2010_Group3 - Project Report.pdf   # project report (Vietnamese, submitted version)
+│   ├── report/                   #   project report (English): main.tex, main.pdf, figures, tables
+│   └── slides/                   #   presentation
 ├── requirements.txt
 ├── LICENSE
 └── README.md
@@ -158,82 +159,128 @@ produce **identical samples** at every address; the trade-off is purely in hardw
 
 | # | Module | File | Role |
 |---|--------|------|------|
-| 1 | `phase_acc` | `phase_acc.v` | `PW`-bit accumulator, `phase <= phase + ftw` when `en` is high, synchronous reset. |
-| 2 | `sine_rom_full` | `sine_rom_full.v` | $2^{AW}$ × 12-bit sine table loaded with `$readmemh`. Two output registers (lookup, output). |
-| 3 | `sine_rom_quarter` | `sine_rom_quarter.v` | $2^{AW-2}$ × 12-bit table. `addr[AW-2]` mirrors the address, `addr[AW-1]` (delayed one stage) negates the sample. Same two-stage latency as the full ROM. |
-| 4 | `nco` | `nco.v` | `phase_acc` followed by the ROM selected with `USE_QUARTER_ROM`; the top `AW` bits of the phase form the ROM address. |
+| 1 | `phase_acc` | `phase_acc.v` | `PW`-bit accumulator, `phase <= phase + ftw` when `en` is high. Wraps modulo $2^{PW}$, which sets the output frequency. |
+| 2 | `sine_rom_full` | `sine_rom_full.v` | $2^{AW}$ × 12-bit sine table loaded with `$readmemh`. Two output registers, latency 2 clocks. |
+| 3 | `sine_rom_quarter` | `sine_rom_quarter.v` | $2^{AW-2}$ × 12-bit table. Mirrors the address in the second and fourth quadrant and negates the sample in the second half. Same 2-clock latency. |
+| 4 | `nco` | `nco.v` | `phase_acc` followed by the ROM selected with `USE_QUARTER_ROM`; the top `AW` phase bits form the ROM address. |
 | 5 | `am_envelope` | `am_envelope.v` | `env = amp_car + ((amp_msg · msg) >>> 11)`, registered. `amp_msg` is zero-extended before the signed multiply. |
 | 6 | `am_multiplier` | `am_multiplier.v` | `am_out = (env · car) >>> 11`, registered, 16-bit signed. |
 | 7 | `am_modulator_top` | `am_modulator_top.v` | Instantiates the carrier and message NCOs, the envelope and the multiplier, and delays the carrier one clock (`car_d1`) to meet the registered envelope. |
 
 ---
 
-## 6. Fixed-Point Datapath and Pipeline
+## 6. Datapath and Pipeline
 
-### 6.1 Sine tables
+**Sine tables.** Every entry is $\text{rom}[k] = \text{round}\left(2047 \sin\left(2\pi (k + 0.5) / 2^{AW}\right)\right)$,
+12-bit two's complement (Q11). The half-sample offset makes the table exactly symmetric, which is what allows
+the quarter-wave reconstruction to be bit-exact.
 
-Every table entry is
+**Arithmetic.** Both products are shifted right by 11 bits with `>>>` (floor division by 2048), and the golden
+model uses the same rounding.
 
-$$
-\text{rom}[k] = \text{round}\left(2047 \cdot \sin\left(\frac{2\pi (k + 0.5)}{2^{AW}}\right)\right)
-$$
-
-The half-sample offset makes the table exactly symmetric, which is what allows the quarter-wave
-reconstruction to be bit-exact. Values are 12-bit two's complement, i.e. Q11 with a peak of 2047.
-`mem/manifest.json` lists every table with its size and SHA-256 checksum.
-
-### 6.2 Arithmetic
-
-| Stage | Expression | Width |
-|---|---|---|
-| Sine sample `car`, `msg` | table lookup | 12-bit signed, [−2047, 2047] |
-| Message term | `(amp_msg · msg) >>> 11` | 14-bit signed |
-| Envelope `env` | `amp_car + message term` | 14-bit signed |
-| Output `am_out` | `(env · car) >>> 11` | 16-bit signed |
-
-Both shifts are arithmetic (`>>>`), i.e. floor division by 2048, and the golden model uses the same
-rounding (`>>` on Python integers). The leading `1'b0` in `$signed({1'b0, amp_msg})` keeps the
-unsigned amplitude positive inside a signed multiply; without it the negative half of the message
-would be wrong. `tb_am_top` was shown to catch exactly this bug.
-
-### 6.3 Word widths and overflow
-
-`tests/test_datapath_ranges.py` sweeps every `amp_msg` value from 0 to 4095 against the table
-extremes and both `amp_car` limits:
-
-| Signal | Reachable range | Available | Margin |
+| Signal | Width | Reachable range | Available range |
 |---|---|---|---|
-| `env` | [−4094, 8188] | 14-bit signed [−8192, 8191] | 3 LSB at the top |
-| `am_out` | \|am_out\| < 2¹⁴ | 16-bit signed | 1 spare bit |
+| `car`, `msg` | 12-bit signed | [−2047, 2047] | [−2048, 2047] |
+| `env` | 14-bit signed | [−4094, 8188] | [−8192, 8191] |
+| `am_out` | 16-bit signed | \|am_out\| < 2¹⁴ | [−32768, 32767] |
 
-No stage can overflow for any 12-bit input, so the design needs no saturation logic.
+`tests/test_datapath_ranges.py` sweeps every `amp_msg` against the table extremes and both `amp_car` limits, so
+no stage can overflow for any 12-bit input and no saturation logic is needed.
 
-### 6.4 Latency
+**Latency.** There are four register stages after the phase accumulator: ROM stage 1, ROM stage 2, envelope (with
+`car_d1` on the carrier side) and multiplier. A testbench that samples after every rising edge sees golden sample
+*n* at its own index *n* + 3, because `phase[0]` already sits at the ROM input during reset. Every testbench and
+Python tool drops these **3 warm-up samples** before comparing.
 
-There are four register stages after the phase accumulator: ROM stage 1, ROM stage 2, envelope (with
-`car_d1` on the carrier side), and multiplier. A phase value therefore reaches `am_out` four clock
-edges later. A testbench that releases reset and samples after every rising edge sees reference
-sample *n* at its own sample index *n* + 3, because `phase[0]` (the reset value) already sits at the
-ROM input during reset. All testbenches and Python tools drop these **3 warm-up samples** before
-comparing.
+The edge-by-edge pipeline table, the reason for `car_d1`, the signed-cast pitfall and the quarter-wave address
+mapping are worked through in **[docs/am_modulator_top.md](docs/am_modulator_top.md)**.
 
 ---
 
-## 7. Interface Specification
+## 7. Interface Specifications
 
-### 7.1 Ports
+All ports are synchronous to `clk`; `rst` is synchronous and active-high everywhere.
+
+### 7.1 `phase_acc`
+
+![phase_acc block diagram](image/phase_acc.png)
 
 | Port | Direction | Width | Description |
 |---|---|---|---|
-| `clk` | in | 1 | System clock, 100 MHz in all results |
-| `rst` | in | 1 | Synchronous, active-high reset; clears phases, pipeline and output |
-| `ftw_car` | in | 32 | Carrier tuning word, f_c = ftw_car · f_clk / 2³² |
-| `ftw_msg` | in | 32 | Message tuning word, f_m = ftw_msg · f_clk / 2³² |
-| `amp_car` | in | 12 | Carrier amplitude, unsigned, 0–4095 |
-| `amp_msg` | in | 12 | Message amplitude, unsigned, 0–4095; μ = amp_msg / amp_car |
-| `am_out` | out | 16 | AM output sample, signed, one per clock |
+| `clk`, `rst` | Input | 1-bit | Clock, synchronous active-high reset (clears `phase`) |
+| `en` | Input | 1-bit | Accumulate when high; tied to 1 in `am_modulator_top` |
+| `ftw` | Input | `PW`-bit | Frequency tuning word, added every clock |
+| `phase` | Output | `PW`-bit | Current phase, wraps modulo $2^{PW}$ |
 
-### 7.2 Parameters
+### 7.2 `sine_rom_full`
+
+![sine_rom_full block diagram](image/sine_rom_full.png)
+
+| Port | Direction | Width | Description |
+|---|---|---|---|
+| `clk` | Input | 1-bit | Clock (the ROM has no reset, so it can map to block RAM) |
+| `addr` | Input | `AW`-bit | Table address, the top `AW` bits of the phase |
+| `sine` | Output | `DW`-bit signed | Sine sample, 2 clocks after `addr` |
+
+### 7.3 `sine_rom_quarter`
+
+![sine_rom_quarter block diagram](image/sine_rom_quarter.png)
+
+| Port | Direction | Width | Description |
+|---|---|---|---|
+| `clk` | Input | 1-bit | Clock |
+| `addr` | Input | `AW`-bit | Full-period address; `addr[AW-1]` selects the sign, `addr[AW-2]` mirrors the lower bits |
+| `sine` | Output | `DW`-bit signed | Sine sample, identical to `sine_rom_full` at every address, 2 clocks after `addr` |
+
+### 7.4 `nco`
+
+![nco block diagram](image/nco.png)
+
+| Port | Direction | Width | Description |
+|---|---|---|---|
+| `clk`, `rst` | Input | 1-bit | Clock, synchronous active-high reset |
+| `en` | Input | 1-bit | Passed to `phase_acc` |
+| `ftw` | Input | `PW`-bit | Tuning word, $f = \text{ftw} \cdot f_\text{clk} / 2^{PW}$ |
+| `sine` | Output | `DW`-bit signed | Oscillator output |
+
+### 7.5 `am_envelope`
+
+![am_envelope block diagram](image/am_envelope.png)
+
+| Port | Direction | Width | Description |
+|---|---|---|---|
+| `clk`, `rst` | Input | 1-bit | Clock, synchronous active-high reset (clears `env`) |
+| `msg` | Input | `DW`-bit signed | Message sample from the message NCO |
+| `amp_car` | Input | `DW`-bit | Carrier amplitude, unsigned |
+| `amp_msg` | Input | `DW`-bit | Message amplitude, unsigned |
+| `env` | Output | `EW`-bit signed | `amp_car + (amp_msg · msg) >>> 11`, `EW = DW + 2` |
+
+### 7.6 `am_multiplier`
+
+![am_multiplier block diagram](image/am_multiplier.png)
+
+| Port | Direction | Width | Description |
+|---|---|---|---|
+| `clk`, `rst` | Input | 1-bit | Clock, synchronous active-high reset (clears `am_out`) |
+| `env` | Input | `EW`-bit signed | Envelope |
+| `car` | Input | `DW`-bit signed | Carrier, already aligned with `env` |
+| `am_out` | Output | `OW`-bit signed | `(env · car) >>> 11` |
+
+### 7.7 `am_modulator_top`
+
+![am_modulator_top block diagram](image/am_modulator_top.png)
+
+| Port | Direction | Width | Description |
+|---|---|---|---|
+| `clk` | Input | 1-bit | System clock, 100 MHz in all results |
+| `rst` | Input | 1-bit | Synchronous active-high reset; clears phases, pipeline and output |
+| `ftw_car` | Input | 32-bit | Carrier tuning word |
+| `ftw_msg` | Input | 32-bit | Message tuning word |
+| `amp_car` | Input | 12-bit | Carrier amplitude, 0–4095 |
+| `amp_msg` | Input | 12-bit | Message amplitude, 0–4095; μ = amp_msg / amp_car |
+| `am_out` | Output | 16-bit signed | AM output sample, one per clock |
+
+**Parameters**
 
 | Parameter | Default | Description |
 |---|---|---|
@@ -245,7 +292,7 @@ comparing.
 | `FULL_MEM_FILE` | `"sine_full_AW8.mem"` | Full table, must match `AW` |
 | `QUARTER_MEM_FILE` | `"sine_quarter_AW8.mem"` | Quarter table, must match `AW` |
 
-### 7.3 Common tuning words at 100 MHz
+**Common tuning words at 100 MHz**
 
 | Frequency | FTW | | Frequency | FTW |
 |---|---:|---|---|---:|
@@ -267,35 +314,29 @@ comparing.
 | `tb_am_regression` | All 18 cases in one run | Fixed in the file | `verify_rtl.py` |
 
 `tb_am_top` contains its own integer reference model that reads the **full** table, so with
-`USE_QUARTER_ROM = 1` it also proves the quarter-wave reconstruction. Its seven checks:
+`USE_QUARTER_ROM = 1` it also proves the quarter-wave reconstruction. Its seven checks: `am_out` is 0 during
+reset; no X/Z after the pipeline fills; bit-exact against the reference model for 10 000 samples; envelope peak;
+envelope trough; envelope never crosses zero; measured modulation index within 0.01 of `amp_msg / amp_car`. The
+last four are skipped, not failed, for DSB-SC and overmodulation.
 
-1. `am_out` is 0 while reset is asserted
-2. no X/Z on `am_out` after the pipeline fills
-3. bit-exact against the in-bench reference model for 10 000 samples
-4. envelope peak ≈ `(amp_car + amp_msg) · 2047/2048`
-5. envelope trough ≈ `(amp_car − amp_msg) · 2047/2048`
-6. envelope never crosses zero (μ ≤ 1)
-7. measured modulation index within 0.01 of `amp_msg / amp_car`
-
-Checks 4–7 are skipped (not failed) for DSB-SC and overmodulation, where they do not apply.
+![Vivado waveform of tb_am_top](results/sim/tb_am_top/tb_am_top_waveform.png)
 
 ### 8.2 Python golden model
 
-`golden_model/am_golden.py` reproduces the datapath with Python integers: the same tables, the same
-phase arithmetic, the same floor shifts. Every RTL output file starts with a header line written by
-the testbench,
+`golden_model/am_golden.py` reproduces the datapath with Python integers: the same tables, the same phase
+arithmetic, the same floor shifts. Every RTL output file starts with a header line written by the testbench,
 
 ```text
 # case=functional_mu_0.5 aw=8 rom=FULL ftw_car=42949673 ftw_msg=858993 amp_car=2000 amp_msg=1000 latency=3 samples=10000
 ```
 
-and the comparison tools rebuild the golden reference from that header. The golden model is
-therefore always driven by exactly what the RTL received, after any bit truncation or override.
+and the comparison tools rebuild the golden reference from that header, so the golden model is always driven by
+exactly what the RTL received.
 
 ### 8.3 Regression results
 
-All 18 cases of `tb_am_regression`, 10 000 samples each, compared sample by sample with no offset
-search (`results/rtl/RTL_VERIFICATION.md`):
+All 18 cases of `tb_am_regression`, 10 000 samples each, compared sample by sample with no offset search
+([results/rtl/RTL_VERIFICATION.md](results/rtl/RTL_VERIFICATION.md)):
 
 | # | Case | AW | ROM | f_c | f_m | amp_car | amp_msg | μ | Result |
 |---:|---|---:|---|---:|---:|---:|---:|---:|---|
@@ -318,25 +359,20 @@ search (`results/rtl/RTL_VERIFICATION.md`):
 | 17 | `edge_ftw_max` | 8 | FULL | FTW = 2³²−1 | 20 kHz | 2000 | 1000 | 0.5 | PASS |
 | 18 | `edge_ftw_zero` | 8 | FULL | 0 Hz | 20 kHz | 2000 | 1000 | 0.5 | PASS |
 
-**18 / 18 bit-exact.** Each case folder in `results/rtl/` holds the RTL samples and two figures: the
-golden and RTL waveforms side by side with their difference, and the two spectra side by side.
+**18 / 18 bit-exact.** Each folder in `results/rtl/` holds the RTL samples and two figures: golden and RTL
+waveforms side by side with their difference, and the two spectra side by side.
 
-<!-- Replace with the figure you want on the front page, for example functional_mu_0.5 -->
 ![Golden model vs RTL, functional_mu_0.5](results/rtl/functional_mu_0.5/rtl_vs_golden.png)
 
-The edge cases are expected to look unusual. At f_c = f_s/2 the ROM only reads addresses 0 and
-2^(AW−1), whose values are ±25 because of the half-sample offset, so the output is tiny. With
-FTW = 0 the carrier stands still at `rom[0]`, and `am_out` becomes a scaled copy of the envelope.
+The edge cases look unusual on purpose: at f_c = f_s/2 the ROM only reads two addresses, whose values are ±25,
+and with FTW = 0 the carrier stands still so `am_out` traces the envelope. See
+[docs/am_modulator_top.md](docs/am_modulator_top.md#5-frequency-and-phase).
 
-### 8.4 Custom runs
+### 8.4 Custom runs and the results workbook
 
 Any configuration can be run by editing `tb/am_config.txt` and simulating `tb_am_top_filebased`;
-`check_result.py` compares the result and stores it in `results/custom/<CASE>/`. See
-[Section 11.3](#113-custom-configuration).
-
-### 8.5 Results workbook
-
-`python golden_model/make_excel.py` collects everything into `results/results.xlsx`:
+`check_result.py` stores the comparison in `results/custom/<CASE>/`. `make_excel.py` then collects every
+regression case, custom run and synthesis report into `results/results.xlsx`:
 
 | Sheet | Content |
 |---|---|
@@ -350,8 +386,8 @@ Any configuration can be run by editing `tb/am_config.txt` and simulating `tb_am
 
 ## 9. Synthesis Results
 
-Vivado 2020.2, `xc7a35tcpg236-1`, 100 MHz clock constraint, results after place and route. Reports
-are in `results/synth/<config>/`.
+Vivado 2020.2, `xc7a35tcpg236-1`, 100 MHz clock constraint, results after place and route. Reports are in
+`results/synth/<config>/`; the procedure is in [docs/SIMULATION.md](docs/SIMULATION.md#7-synthesis-of-all-six-configurations).
 
 <!--
   TODO: fill in from results/results.xlsx, sheet "Resources", after rerunning the synthesis loop
@@ -375,8 +411,8 @@ are in `results/synth/<config>/`.
 
 ## 10. Spectral Results
 
-SFDR of the AM output (μ = 0.5, 10 000 samples, periodic Hann window, ±3 bins excluded around each
-intended line, DC counted as a spur):
+SFDR of the AM output measured on the RTL samples (μ = 0.5, 10 000 samples, periodic Hann window, ±3 bins
+excluded around each intended line, DC counted as a spur; column *SFDR (dB)* of `results/results.xlsx`):
 
 | AW | Table entries (full / quarter) | SFDR (dB) | Full = Quarter |
 |---:|---|---:|---|
@@ -384,109 +420,27 @@ intended line, DC counted as a spur):
 | 10 | 1024 / 256 | 60.72 | yes, bit-exact |
 | 12 | 4096 / 1024 | 71.88 | yes, bit-exact |
 
-Each additional address bit buys about 6 dB of SFDR, which matches the expected behaviour of phase
-truncation in a DDS: the spurs come from discarding the lower `32 − AW` phase bits. Because the
-quarter-wave ROM reproduces the full table exactly, the choice between the two architectures has no
-effect on signal quality.
+Each additional address bit buys about 6 dB of SFDR, the expected behaviour of phase truncation in a DDS: the
+spurs come from discarding the lower `32 − AW` phase bits. Because the quarter-wave ROM reproduces the full table
+exactly, the choice between the two architectures has no effect on signal quality.
 
 ---
 
-## 11. Running the Project in Vivado
+## 11. Limitations
 
-### 11.1 One-time setup
-
-1. Create or open the project in `AM_Modulation_Vivado/` inside the repository.
-2. **Design Sources:** add `src/*.v`, `constraint/constraints.xdc` and all six `mem/*.mem` files.
-   Do not tick *Copy sources into project*. Set `am_modulator_top` as top.
-3. **Simulation Sources:** add `tb/*.v`. Do **not** add `tb/am_config.txt`; the testbench reads the
-   original file so that edits take effect immediately.
-4. *Settings → Simulation → Simulation*: set `xsim.simulate.runtime` to `all` and tick
-   `xsim.simulate.log_all_signals`.
-
-These settings live in the Vivado project, which is not committed, so every team member sets them
-once.
-
-### 11.2 Demo with waveforms
-
-Set `tb_am_top` as simulation top and run behavioral simulation. `tb/tb_am_top_behav.wcfg` shows
-`msg`, `car`, `env` and `am_out` in analog style. To build the view yourself: select `u_dut` in the
-Scope window, drag the signals in, then *Radix → Signed Decimal* and *Waveform Style → Analog* for
-each.
-
-<!-- Replace with your Vivado screenshot -->
-![Vivado waveform of tb_am_top](results/sim/tb_am_top/tb_am_top_waveform.png)
-
-### 11.3 Custom configuration
-
-Edit `tb/am_config.txt`, set `tb_am_top_filebased` as top, run, then
-`python golden_model/check_result.py`:
-
-```text
-CASE    = fc2M_fm50k_mu075
-FC_HZ   = 2000000
-FM_HZ   = 50000
-AMP_CAR = 2000
-AMP_MSG = 1500
-SAMPLES = 10000
-```
-
-`AW` and the ROM type change the hardware, so they are set as generics:
-
-```tcl
-set_property generic {AW=10 USE_QUARTER_ROM=1 FULL_MEM_FILE="sine_full_AW10.mem" QUARTER_MEM_FILE="sine_quarter_AW10.mem"} [get_filesets sim_1]
-```
-
-### 11.4 Regression
-
-Set `tb_am_regression` as top and run (about 1.3 ms of simulated time), then
-`python golden_model/verify_rtl.py`.
-
-### 11.5 Synthesis of all six configurations
-
-Paste in the Tcl console of the open project:
-
-```tcl
-set root C:/GitHub/AM-Modulation
-set_property top am_modulator_top [get_filesets sources_1]
-foreach aw {8 10 12} {
-  foreach q {0 1} {
-    set tag aw${aw}_[expr {$q ? "quarter" : "full"}]
-    set_property generic "AW=$aw USE_QUARTER_ROM=$q FULL_MEM_FILE=\"sine_full_AW${aw}.mem\" QUARTER_MEM_FILE=\"sine_quarter_AW${aw}.mem\"" [get_filesets sources_1]
-    reset_run synth_1
-    reset_run impl_1
-    launch_runs impl_1 -jobs 2
-    wait_on_run impl_1
-    open_run impl_1
-    file mkdir $root/results/synth/$tag
-    report_utilization    -file $root/results/synth/$tag/utilization.rpt
-    report_timing_summary -file $root/results/synth/$tag/timing.rpt
-    report_power          -file $root/results/synth/$tag/power.rpt
-    close_design
-  }
-}
-set_property generic {} [get_filesets sources_1]
-```
-
-Then `python golden_model/make_excel.py`. The script checks that every report belongs to
-`am_modulator_top` and skips any that does not.
-
----
-
-## 12. Limitations
-
-- **Simulation and implementation only.** No FPGA board was available; there are no pin
-  assignments and the design has not been run in hardware.
+- **Simulation and implementation only.** No FPGA board was available; there are no pin assignments and the
+  design has not been run in hardware.
 - **No DAC or analog output stage.** `am_out` is a digital sample stream.
-- **Phase truncation spurs.** Only the top `AW` phase bits address the ROM; SFDR is limited to about
-  6 dB per address bit ([Section 10](#10-spectral-results)).
-- **Overmodulation is not limited.** With μ > 1 the envelope crosses zero as the arithmetic
-  dictates; there is no clipping or warning output.
-- **Inputs are assumed quasi-static** and synchronous to `clk`; the constraints declare them false
-  paths, and there is no clock-domain crossing logic.
+- **Phase truncation spurs.** Only the top `AW` phase bits address the ROM; SFDR is limited to about 6 dB per
+  address bit ([Section 10](#10-spectral-results)).
+- **Overmodulation is not limited.** With μ > 1 the envelope crosses zero as the arithmetic dictates; there is no
+  clipping or warning output.
+- **Inputs are assumed quasi-static** and synchronous to `clk`; the constraints declare them false paths, and
+  there is no clock-domain crossing logic.
 
 ---
 
-## 13. Future Work
+## 12. Future Work
 
 - Phase dithering or Taylor-series correction to raise SFDR without a larger ROM.
 - A CORDIC sine generator as a third architecture to compare against the two ROMs.
@@ -496,27 +450,26 @@ Then `python golden_model/make_excel.py`. The script checks that every report be
 
 ---
 
-## 14. References
+## 13. References
 
 <!-- Check these against the reference list of the project report and add any the team used. -->
 
-1. J. Tierney, C. M. Rader, and B. Gold, "A digital frequency synthesizer," *IEEE Transactions on
-   Audio and Electroacoustics*, vol. AU-19, no. 1, pp. 48–57, Mar. 1971.
-2. J. Vankka, "Methods of mapping from phase to sine amplitude in direct digital synthesis," *IEEE
-   Transactions on Ultrasonics, Ferroelectrics, and Frequency Control*, vol. 44, no. 2,
-   pp. 526–534, Mar. 1997.
-3. H. T. Nicholas and H. Samueli, "An analysis of the output spectrum of direct digital frequency
-   synthesizers in the presence of phase-accumulator truncation," in *Proc. 41st Annual Frequency
-   Control Symposium*, 1987, pp. 495–502.
+1. J. Tierney, C. M. Rader, and B. Gold, "A digital frequency synthesizer," *IEEE Transactions on Audio and
+   Electroacoustics*, vol. AU-19, no. 1, pp. 48–57, Mar. 1971.
+2. J. Vankka, "Methods of mapping from phase to sine amplitude in direct digital synthesis," *IEEE Transactions
+   on Ultrasonics, Ferroelectrics, and Frequency Control*, vol. 44, no. 2, pp. 526–534, Mar. 1997.
+3. H. T. Nicholas and H. Samueli, "An analysis of the output spectrum of direct digital frequency synthesizers in
+   the presence of phase-accumulator truncation," in *Proc. 41st Annual Frequency Control Symposium*, 1987,
+   pp. 495–502.
 4. Analog Devices, *A Technical Tutorial on Digital Signal Synthesis*, 1999.
 5. Analog Devices, *MT-085 Tutorial: Fundamentals of Direct Digital Synthesis (DDS)*, 2008.
-6. F. J. Harris, "On the use of windows for harmonic analysis with the discrete Fourier transform,"
-   *Proceedings of the IEEE*, vol. 66, no. 1, pp. 51–83, Jan. 1978.
+6. F. J. Harris, "On the use of windows for harmonic analysis with the discrete Fourier transform," *Proceedings
+   of the IEEE*, vol. 66, no. 1, pp. 51–83, Jan. 1978.
 7. S. Haykin, *Communication Systems*, 4th ed. New York, NY, USA: Wiley, 2001.
-8. B. P. Lathi and Z. Ding, *Modern Digital and Analog Communication Systems*, 4th ed. New York,
-   NY, USA: Oxford University Press, 2009.
-9. A. V. Oppenheim and R. W. Schafer, *Discrete-Time Signal Processing*, 3rd ed. Upper Saddle
-   River, NJ, USA: Pearson, 2010.
+8. B. P. Lathi and Z. Ding, *Modern Digital and Analog Communication Systems*, 4th ed. New York, NY, USA: Oxford
+   University Press, 2009.
+9. A. V. Oppenheim and R. W. Schafer, *Discrete-Time Signal Processing*, 3rd ed. Upper Saddle River, NJ, USA:
+   Pearson, 2010.
 10. *IEEE Standard for Verilog Hardware Description Language*, IEEE Std 1364-2005.
 11. Xilinx, *Vivado Design Suite User Guide: Synthesis*, UG901, v2020.2.
 12. Xilinx, *Vivado Design Suite User Guide: Logic Simulation*, UG900, v2020.2.
@@ -525,6 +478,6 @@ Then `python golden_model/make_excel.py`. The script checks that every report be
 
 ---
 
-## 15. License
+## 14. License
 
 Released under the MIT License, see [LICENSE](LICENSE).
