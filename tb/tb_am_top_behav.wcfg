@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wave_config>
+   <wave_state>
+   </wave_state>
+   <db_ref_list>
+      <db_ref path="tb_am_top_behav.wdb" id="1">
+         <top_modules>
+            <top_module name="glbl" />
+            <top_module name="tb_am_top" />
+         </top_modules>
+      </db_ref>
+   </db_ref_list>
+   <zoom_setting>
+      <ZoomStartTime time="0fs"></ZoomStartTime>
+      <ZoomEndTime time="100066001fs"></ZoomEndTime>
+      <Cursor1Time time="42835000fs"></Cursor1Time>
+   </zoom_setting>
+   <column_width_setting>
+      <NameColumnWidth column_width="204"></NameColumnWidth>
+      <ValueColumnWidth column_width="134"></ValueColumnWidth>
+   </column_width_setting>
+   <WVObjectSize size="41" />
+   <wvobject fp_name="/tb_am_top/clk" type="logic">
+      <obj_property name="ElementShortName">clk</obj_property>
+      <obj_property name="ObjectShortName">clk</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_am_top/rst" type="logic">
+      <obj_property name="ElementShortName">rst</obj_property>
+      <obj_property name="ObjectShortName">rst</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_am_top/ftw_car" type="array">
+      <obj_property name="ElementShortName">ftw_car[31:0]</obj_property>
+      <obj_property name="ObjectShortName">ftw_car[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_am_top/ftw_msg" type="array">
+      <obj_property name="ElementShortName">ftw_msg[31:0]</obj_property>
+      <obj_property name="ObjectShortName">ftw_msg[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_am_top/amp_car" type="array">
+      <obj_property name="ElementShortName">amp_car[11:0]</obj_property>
+      <obj_property name="ObjectShortName">amp_car[11:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_am_top/amp_msg" type="array">
+      <obj_property name="ElementShortName">amp_msg[11:0]</obj_property>
+      <obj_property name="ObjectShortName">amp_msg[11:0]</obj_property>
+      <obj_property name="WaveformStyle">STYLE_DIGITAL</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_am_top/u_dut/car" type="array">
+      <obj_property name="ElementShortName">car[11:0]</obj_property>
+      <obj_property name="ObjectShortName">car[11:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+      <obj_property name="WaveformStyle">STYLE_ANALOG</obj_property>
+      <obj_property name="CellHeight">100</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_am_top/u_dut/msg" type="array">
+      <obj_property name="ElementShortName">msg[11:0]</obj_property>
+      <obj_property name="ObjectShortName">msg[11:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+      <obj_property name="WaveformStyle">STYLE_ANALOG</obj_property>
+      <obj_property name="CellHeight">100</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_am_top/u_dut/env" type="array">
+      <obj_property name="ElementShortName">env[13:0]</obj_property>
+      <obj_property name="ObjectShortName">env[13:0]</obj_property>
+      <obj_property name="WaveformStyle">STYLE_ANALOG</obj_property>
+      <obj_property name="CellHeight">100</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_am_top/am_out" type="array">
+      <obj_property name="ElementShortName">am_out[15:0]</obj_property>
+      <obj_property name="ObjectShortName">am_out[15:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+      <obj_property name="WaveformStyle">STYLE_ANALOG</obj_property>
+      <obj_property name="CellHeight">100</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_am_top/ref_rom" type="array">
+      <obj_property name="ElementShortName">ref_rom[0:255][11:0]</obj_property>
+      <obj_property name="ObjectShortName">ref_rom[0:255][11:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_am_top/n_pass" type="array">
+      <obj_property name="ElementShortName">n_pass[31:0]</obj_property>
+      <obj_property name="ObjectShortName">n_pass[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_am_top/n_fail" type="array">
+      <obj_property name="ElementShortName">n_fail[31:0]</obj_property>
+      <obj_property name="ObjectShortName">n_fail[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_am_top/n_skip" type="array">
+      <obj_property name="ElementShortName">n_skip[31:0]</obj_property>
+      <obj_property name="ObjectShortName">n_skip[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_am_top/i" type="array">
+      <obj_property name="ElementShortName">i[31:0]</obj_property>
+      <obj_property name="ObjectShortName">i[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_am_top/expected" type="array">
+      <obj_property name="ElementShortName">expected[31:0]</obj_property>
+      <obj_property name="ObjectShortName">expected[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_am_top/mismatches" type="array">
+      <obj_property name="ElementShortName">mismatches[31:0]</obj_property>
+      <obj_property name="ObjectShortName">mismatches[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_am_top/x_count" type="array">
+      <obj_property name="ElementShortName">x_count[31:0]</obj_property>
+      <obj_property name="ObjectShortName">x_count[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_am_top/first_bad" type="array">
+      <obj_property name="ElementShortName">first_bad[31:0]</obj_property>
+      <obj_property name="ObjectShortName">first_bad[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_am_top/out_max" type="array">
+      <obj_property name="ElementShortName">out_max[31:0]</obj_property>
+      <obj_property name="ObjectShortName">out_max[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_am_top/out_min" type="array">
+      <obj_property name="ElementShortName">out_min[31:0]</obj_property>
+      <obj_property name="ObjectShortName">out_min[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_am_top/win_max" type="array">
+      <obj_property name="ElementShortName">win_max[31:0]</obj_property>
+      <obj_property name="ObjectShortName">win_max[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_am_top/peak_min" type="array">
+      <obj_property name="ElementShortName">peak_min[31:0]</obj_property>
+      <obj_property name="ObjectShortName">peak_min[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_am_top/ph_car" type="array">
+      <obj_property name="ElementShortName">ph_car[31:0]</obj_property>
+      <obj_property name="ObjectShortName">ph_car[31:0]</obj_property>
+      <obj_property name="WaveformStyle">STYLE_DIGITAL</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_am_top/ph_msg" type="array">
+      <obj_property name="ElementShortName">ph_msg[31:0]</obj_property>
+      <obj_property name="ObjectShortName">ph_msg[31:0]</obj_property>
+      <obj_property name="WaveformStyle">STYLE_DIGITAL</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_am_top/ideal_max" type="other">
+      <obj_property name="ElementShortName">ideal_max</obj_property>
+      <obj_property name="ObjectShortName">ideal_max</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_am_top/ideal_trough" type="other">
+      <obj_property name="ElementShortName">ideal_trough</obj_property>
+      <obj_property name="ObjectShortName">ideal_trough</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_am_top/tol" type="other">
+      <obj_property name="ElementShortName">tol</obj_property>
+      <obj_property name="ObjectShortName">tol</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_am_top/mu_meas" type="other">
+      <obj_property name="ElementShortName">mu_meas</obj_property>
+      <obj_property name="ObjectShortName">mu_meas</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_am_top/mu_ideal" type="other">
+      <obj_property name="ElementShortName">mu_ideal</obj_property>
+      <obj_property name="ObjectShortName">mu_ideal</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_am_top/AW" type="array">
+      <obj_property name="ElementShortName">AW[31:0]</obj_property>
+      <obj_property name="ObjectShortName">AW[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_am_top/USE_QUARTER_ROM" type="array">
+      <obj_property name="ElementShortName">USE_QUARTER_ROM[31:0]</obj_property>
+      <obj_property name="ObjectShortName">USE_QUARTER_ROM[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_am_top/FULL_MEM_FILE" type="array">
+      <obj_property name="ElementShortName">FULL_MEM_FILE[135:0]</obj_property>
+      <obj_property name="ObjectShortName">FULL_MEM_FILE[135:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_am_top/QUARTER_MEM_FILE" type="array">
+      <obj_property name="ElementShortName">QUARTER_MEM_FILE[159:0]</obj_property>
+      <obj_property name="ObjectShortName">QUARTER_MEM_FILE[159:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_am_top/FTW_CAR" type="array">
+      <obj_property name="ElementShortName">FTW_CAR[31:0]</obj_property>
+      <obj_property name="ObjectShortName">FTW_CAR[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_am_top/FTW_MSG" type="array">
+      <obj_property name="ElementShortName">FTW_MSG[31:0]</obj_property>
+      <obj_property name="ObjectShortName">FTW_MSG[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_am_top/AMP_CAR" type="array">
+      <obj_property name="ElementShortName">AMP_CAR[11:0]</obj_property>
+      <obj_property name="ObjectShortName">AMP_CAR[11:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_am_top/AMP_MSG" type="array">
+      <obj_property name="ElementShortName">AMP_MSG[11:0]</obj_property>
+      <obj_property name="ObjectShortName">AMP_MSG[11:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_am_top/NUM_SAMPLES" type="array">
+      <obj_property name="ElementShortName">NUM_SAMPLES[31:0]</obj_property>
+      <obj_property name="ObjectShortName">NUM_SAMPLES[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_am_top/LATENCY" type="array">
+      <obj_property name="ElementShortName">LATENCY[31:0]</obj_property>
+      <obj_property name="ObjectShortName">LATENCY[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_am_top/CAR_PERIOD" type="array">
+      <obj_property name="ElementShortName">CAR_PERIOD[31:0]</obj_property>
+      <obj_property name="ObjectShortName">CAR_PERIOD[31:0]</obj_property>
+   </wvobject>
+</wave_config>
