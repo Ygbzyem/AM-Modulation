@@ -10,6 +10,16 @@ AM_Modulation_Vivado/
 # simulation output
 results/*.txt
 golden_model/verification_logs/*.txt
+am_out.txt
+rtl_case*.txt
+
+# regenerable bulk data (python golden_model/run_part_a.py)
+results/**/trace.csv
+results/**/fft.csv
+results/am_runs.*
+
+# keep the Vivado console logs that document each testbench run
+!results/sim/**/*.log
 
 # Python
 __pycache__/
