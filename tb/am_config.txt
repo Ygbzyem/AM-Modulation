@@ -1,0 +1,21 @@
+# am_config.txt - stimulus for tb/tb_am_top_filebased.v
+#
+# Edit, save, then Run Behavioral Simulation. No Tcl and no recompile needed.
+# Format: KEY = VALUE, one per line. Lines starting with # are comments.
+# A key that is left out keeps its default (shown below).
+#
+# Frequencies: give either the frequency in Hz (FC_HZ / FM_HZ) or the raw
+# tuning word (FTW_CAR / FTW_MSG). FTW = round(f * 2^32 / 100 MHz).
+# If both are given, the line further down the file wins.
+#
+# Amplitudes: 0 .. 4095.  Modulation index mu = AMP_MSG / AMP_CAR.
+#
+# AW and the ROM type are hardware parameters, fixed before simulation
+# starts, so they cannot be set here (see the header of the testbench).
+
+CASE    = default
+FC_HZ   = 1000000
+FM_HZ   = 20000
+AMP_CAR = 2000
+AMP_MSG = 1000
+SAMPLES = 10000

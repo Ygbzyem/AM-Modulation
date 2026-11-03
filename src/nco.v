@@ -5,8 +5,8 @@ module nco #(
     parameter integer AW = 8,
     parameter integer DW = 12,
     parameter integer USE_QUARTER_ROM = 0,
-    parameter FULL_MEM_FILE = "sine_full.mem",
-    parameter QUARTER_MEM_FILE = "sine_quarter.mem"
+    parameter FULL_MEM_FILE    = "sine_full_AW8.mem",
+    parameter QUARTER_MEM_FILE = "sine_quarter_AW8.mem"
 )(
     input  wire                 clk,
     input  wire                 rst,
@@ -18,10 +18,10 @@ module nco #(
     wire [PW-1:0] phase;
     wire [AW-1:0] rom_addr;
 
-    // Lay AW bit cao cua pha lam dia chi ROM
+    // The top AW bits of the phase address the sine table
     assign rom_addr = phase[PW-1:PW-AW];
 
-    // Bo tich luy pha
+    // Phase accumulator
     phase_acc #(
         .PW(PW)
     ) u_phase_acc (
@@ -32,7 +32,7 @@ module nco #(
         .phase (phase)
     );
 
-    // Lua chon kien truc ROM
+    // ROM architecture, selected at elaboration time
     generate
         if (USE_QUARTER_ROM != 0) begin : g_quarter_rom
             sine_rom_quarter #(

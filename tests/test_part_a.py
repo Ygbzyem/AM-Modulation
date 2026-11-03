@@ -8,11 +8,11 @@ from pathlib import Path
 
 import numpy as np
 
-from model.am_golden import Config, generate, save
-from model.compare import compare, read_samples
-from model.gen_sine_rom import generate_all, quarter_lookup, sine_tables
-from model.run_part_a import cases
-from model.spectrum import analyze_am, measure
+from golden_model.am_golden import Config, generate, save
+from golden_model.compare import compare, read_samples
+from golden_model.gen_sine_rom import generate_all, quarter_lookup, sine_tables
+from golden_model.run_part_a import cases
+from golden_model.spectrum import analyze_am, measure
 
 
 def temporary_directory():

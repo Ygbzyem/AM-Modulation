@@ -1,4 +1,15 @@
 `timescale 1ns / 1ps
+//==========================================================================
+// tb_am_top.v - self-checking testbench, every setting hard-coded below.
+//
+// Meant for the live demo in the Vivado GUI: set this file as the
+// simulation top, Run Behavioral Simulation, and read the PASS/FAIL
+// summary in the Tcl console. No Python and no command line needed.
+//
+// The checker carries its own integer reference model that reads the FULL
+// sine table, so with USE_QUARTER_ROM = 1 it also proves that the
+// quarter-wave reconstruction equals the full table.
+//==========================================================================
 module tb_am_top;
 
     // ---------------- configuration (edit these together) ----------------

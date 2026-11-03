@@ -3,202 +3,337 @@
    <wave_state>
    </wave_state>
    <db_ref_list>
-      <db_ref path="tb_am_top_behav.wdb" id="1">
+      <db_ref path="tb_am_top_filebased_behav.wdb" id="1">
          <top_modules>
             <top_module name="glbl" />
-            <top_module name="tb_am_top" />
+            <top_module name="tb_am_top_filebased" />
          </top_modules>
       </db_ref>
    </db_ref_list>
    <zoom_setting>
       <ZoomStartTime time="0fs"></ZoomStartTime>
-      <ZoomEndTime time="100066001fs"></ZoomEndTime>
-      <Cursor1Time time="42835000fs"></Cursor1Time>
+      <ZoomEndTime time="182252773fs"></ZoomEndTime>
+      <Cursor1Time time="45981fs"></Cursor1Time>
    </zoom_setting>
    <column_width_setting>
       <NameColumnWidth column_width="204"></NameColumnWidth>
-      <ValueColumnWidth column_width="134"></ValueColumnWidth>
+      <ValueColumnWidth column_width="130"></ValueColumnWidth>
    </column_width_setting>
-   <WVObjectSize size="41" />
-   <wvobject fp_name="/tb_am_top/clk" type="logic">
+   <WVObjectSize size="76" />
+   <wvobject fp_name="/tb_am_top_filebased/clk" type="logic">
       <obj_property name="ElementShortName">clk</obj_property>
       <obj_property name="ObjectShortName">clk</obj_property>
    </wvobject>
-   <wvobject fp_name="/tb_am_top/rst" type="logic">
+   <wvobject fp_name="/tb_am_top_filebased/rst" type="logic">
       <obj_property name="ElementShortName">rst</obj_property>
       <obj_property name="ObjectShortName">rst</obj_property>
    </wvobject>
-   <wvobject fp_name="/tb_am_top/ftw_car" type="array">
+   <wvobject fp_name="/tb_am_top_filebased/ftw_car" type="array">
       <obj_property name="ElementShortName">ftw_car[31:0]</obj_property>
       <obj_property name="ObjectShortName">ftw_car[31:0]</obj_property>
    </wvobject>
-   <wvobject fp_name="/tb_am_top/ftw_msg" type="array">
+   <wvobject fp_name="/tb_am_top_filebased/ftw_msg" type="array">
       <obj_property name="ElementShortName">ftw_msg[31:0]</obj_property>
       <obj_property name="ObjectShortName">ftw_msg[31:0]</obj_property>
    </wvobject>
-   <wvobject fp_name="/tb_am_top/amp_car" type="array">
+   <wvobject fp_name="/tb_am_top_filebased/amp_car" type="array">
       <obj_property name="ElementShortName">amp_car[11:0]</obj_property>
       <obj_property name="ObjectShortName">amp_car[11:0]</obj_property>
-      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
    </wvobject>
-   <wvobject fp_name="/tb_am_top/amp_msg" type="array">
-      <obj_property name="ElementShortName">amp_msg[11:0]</obj_property>
-      <obj_property name="ObjectShortName">amp_msg[11:0]</obj_property>
-      <obj_property name="WaveformStyle">STYLE_DIGITAL</obj_property>
-      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
-   </wvobject>
-   <wvobject fp_name="/tb_am_top/u_dut/car" type="array">
+   <wvobject fp_name="/tb_am_top_filebased/u_dut/car" type="array">
       <obj_property name="ElementShortName">car[11:0]</obj_property>
       <obj_property name="ObjectShortName">car[11:0]</obj_property>
-      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
       <obj_property name="WaveformStyle">STYLE_ANALOG</obj_property>
       <obj_property name="CellHeight">100</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
    </wvobject>
-   <wvobject fp_name="/tb_am_top/u_dut/msg" type="array">
+   <wvobject fp_name="/tb_am_top_filebased/u_dut/msg" type="array">
       <obj_property name="ElementShortName">msg[11:0]</obj_property>
       <obj_property name="ObjectShortName">msg[11:0]</obj_property>
       <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
       <obj_property name="WaveformStyle">STYLE_ANALOG</obj_property>
       <obj_property name="CellHeight">100</obj_property>
    </wvobject>
-   <wvobject fp_name="/tb_am_top/u_dut/env" type="array">
+   <wvobject fp_name="/tb_am_top_filebased/u_dut/env" type="array">
       <obj_property name="ElementShortName">env[13:0]</obj_property>
       <obj_property name="ObjectShortName">env[13:0]</obj_property>
       <obj_property name="WaveformStyle">STYLE_ANALOG</obj_property>
       <obj_property name="CellHeight">100</obj_property>
       <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
    </wvobject>
-   <wvobject fp_name="/tb_am_top/am_out" type="array">
+   <wvobject fp_name="/tb_am_top_filebased/amp_msg" type="array">
+      <obj_property name="ElementShortName">amp_msg[11:0]</obj_property>
+      <obj_property name="ObjectShortName">amp_msg[11:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_am_top_filebased/am_out" type="array">
       <obj_property name="ElementShortName">am_out[15:0]</obj_property>
       <obj_property name="ObjectShortName">am_out[15:0]</obj_property>
       <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
       <obj_property name="WaveformStyle">STYLE_ANALOG</obj_property>
       <obj_property name="CellHeight">100</obj_property>
    </wvobject>
-   <wvobject fp_name="/tb_am_top/ref_rom" type="array">
-      <obj_property name="ElementShortName">ref_rom[0:255][11:0]</obj_property>
-      <obj_property name="ObjectShortName">ref_rom[0:255][11:0]</obj_property>
+   <wvobject fp_name="/tb_am_top_filebased/outfile" type="array">
+      <obj_property name="ElementShortName">outfile[2047:0]</obj_property>
+      <obj_property name="ObjectShortName">outfile[2047:0]</obj_property>
    </wvobject>
-   <wvobject fp_name="/tb_am_top/n_pass" type="array">
-      <obj_property name="ElementShortName">n_pass[31:0]</obj_property>
-      <obj_property name="ObjectShortName">n_pass[31:0]</obj_property>
+   <wvobject fp_name="/tb_am_top_filebased/case_name" type="array">
+      <obj_property name="ElementShortName">case_name[255:0]</obj_property>
+      <obj_property name="ObjectShortName">case_name[255:0]</obj_property>
    </wvobject>
-   <wvobject fp_name="/tb_am_top/n_fail" type="array">
-      <obj_property name="ElementShortName">n_fail[31:0]</obj_property>
-      <obj_property name="ObjectShortName">n_fail[31:0]</obj_property>
+   <wvobject fp_name="/tb_am_top_filebased/fp" type="array">
+      <obj_property name="ElementShortName">fp[31:0]</obj_property>
+      <obj_property name="ObjectShortName">fp[31:0]</obj_property>
    </wvobject>
-   <wvobject fp_name="/tb_am_top/n_skip" type="array">
-      <obj_property name="ElementShortName">n_skip[31:0]</obj_property>
-      <obj_property name="ObjectShortName">n_skip[31:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/tb_am_top/i" type="array">
+   <wvobject fp_name="/tb_am_top_filebased/i" type="array">
       <obj_property name="ElementShortName">i[31:0]</obj_property>
       <obj_property name="ObjectShortName">i[31:0]</obj_property>
    </wvobject>
-   <wvobject fp_name="/tb_am_top/expected" type="array">
-      <obj_property name="ElementShortName">expected[31:0]</obj_property>
-      <obj_property name="ObjectShortName">expected[31:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/tb_am_top/mismatches" type="array">
-      <obj_property name="ElementShortName">mismatches[31:0]</obj_property>
-      <obj_property name="ObjectShortName">mismatches[31:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/tb_am_top/x_count" type="array">
-      <obj_property name="ElementShortName">x_count[31:0]</obj_property>
-      <obj_property name="ObjectShortName">x_count[31:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/tb_am_top/first_bad" type="array">
-      <obj_property name="ElementShortName">first_bad[31:0]</obj_property>
-      <obj_property name="ObjectShortName">first_bad[31:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/tb_am_top/out_max" type="array">
-      <obj_property name="ElementShortName">out_max[31:0]</obj_property>
-      <obj_property name="ObjectShortName">out_max[31:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/tb_am_top/out_min" type="array">
-      <obj_property name="ElementShortName">out_min[31:0]</obj_property>
-      <obj_property name="ObjectShortName">out_min[31:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/tb_am_top/win_max" type="array">
-      <obj_property name="ElementShortName">win_max[31:0]</obj_property>
-      <obj_property name="ObjectShortName">win_max[31:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/tb_am_top/peak_min" type="array">
-      <obj_property name="ElementShortName">peak_min[31:0]</obj_property>
-      <obj_property name="ObjectShortName">peak_min[31:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/tb_am_top/ph_car" type="array">
-      <obj_property name="ElementShortName">ph_car[31:0]</obj_property>
-      <obj_property name="ObjectShortName">ph_car[31:0]</obj_property>
-      <obj_property name="WaveformStyle">STYLE_DIGITAL</obj_property>
-   </wvobject>
-   <wvobject fp_name="/tb_am_top/ph_msg" type="array">
-      <obj_property name="ElementShortName">ph_msg[31:0]</obj_property>
-      <obj_property name="ObjectShortName">ph_msg[31:0]</obj_property>
-      <obj_property name="WaveformStyle">STYLE_DIGITAL</obj_property>
-   </wvobject>
-   <wvobject fp_name="/tb_am_top/ideal_max" type="other">
-      <obj_property name="ElementShortName">ideal_max</obj_property>
-      <obj_property name="ObjectShortName">ideal_max</obj_property>
-   </wvobject>
-   <wvobject fp_name="/tb_am_top/ideal_trough" type="other">
-      <obj_property name="ElementShortName">ideal_trough</obj_property>
-      <obj_property name="ObjectShortName">ideal_trough</obj_property>
-   </wvobject>
-   <wvobject fp_name="/tb_am_top/tol" type="other">
-      <obj_property name="ElementShortName">tol</obj_property>
-      <obj_property name="ObjectShortName">tol</obj_property>
-   </wvobject>
-   <wvobject fp_name="/tb_am_top/mu_meas" type="other">
-      <obj_property name="ElementShortName">mu_meas</obj_property>
-      <obj_property name="ObjectShortName">mu_meas</obj_property>
-   </wvobject>
-   <wvobject fp_name="/tb_am_top/mu_ideal" type="other">
-      <obj_property name="ElementShortName">mu_ideal</obj_property>
-      <obj_property name="ObjectShortName">mu_ideal</obj_property>
-   </wvobject>
-   <wvobject fp_name="/tb_am_top/AW" type="array">
+   <wvobject fp_name="/tb_am_top_filebased/AW" type="array">
       <obj_property name="ElementShortName">AW[31:0]</obj_property>
       <obj_property name="ObjectShortName">AW[31:0]</obj_property>
    </wvobject>
-   <wvobject fp_name="/tb_am_top/USE_QUARTER_ROM" type="array">
+   <wvobject fp_name="/tb_am_top_filebased/USE_QUARTER_ROM" type="array">
       <obj_property name="ElementShortName">USE_QUARTER_ROM[31:0]</obj_property>
       <obj_property name="ObjectShortName">USE_QUARTER_ROM[31:0]</obj_property>
    </wvobject>
-   <wvobject fp_name="/tb_am_top/FULL_MEM_FILE" type="array">
+   <wvobject fp_name="/tb_am_top_filebased/FULL_MEM_FILE" type="array">
       <obj_property name="ElementShortName">FULL_MEM_FILE[135:0]</obj_property>
       <obj_property name="ObjectShortName">FULL_MEM_FILE[135:0]</obj_property>
    </wvobject>
-   <wvobject fp_name="/tb_am_top/QUARTER_MEM_FILE" type="array">
+   <wvobject fp_name="/tb_am_top_filebased/QUARTER_MEM_FILE" type="array">
       <obj_property name="ElementShortName">QUARTER_MEM_FILE[159:0]</obj_property>
       <obj_property name="ObjectShortName">QUARTER_MEM_FILE[159:0]</obj_property>
    </wvobject>
-   <wvobject fp_name="/tb_am_top/FTW_CAR" type="array">
-      <obj_property name="ElementShortName">FTW_CAR[31:0]</obj_property>
-      <obj_property name="ObjectShortName">FTW_CAR[31:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/tb_am_top/FTW_MSG" type="array">
-      <obj_property name="ElementShortName">FTW_MSG[31:0]</obj_property>
-      <obj_property name="ObjectShortName">FTW_MSG[31:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/tb_am_top/AMP_CAR" type="array">
-      <obj_property name="ElementShortName">AMP_CAR[11:0]</obj_property>
-      <obj_property name="ObjectShortName">AMP_CAR[11:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/tb_am_top/AMP_MSG" type="array">
-      <obj_property name="ElementShortName">AMP_MSG[11:0]</obj_property>
-      <obj_property name="ObjectShortName">AMP_MSG[11:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/tb_am_top/NUM_SAMPLES" type="array">
+   <wvobject fp_name="/tb_am_top_filebased/NUM_SAMPLES" type="array">
       <obj_property name="ElementShortName">NUM_SAMPLES[31:0]</obj_property>
       <obj_property name="ObjectShortName">NUM_SAMPLES[31:0]</obj_property>
    </wvobject>
-   <wvobject fp_name="/tb_am_top/LATENCY" type="array">
+   <wvobject fp_name="/tb_am_top_filebased/LATENCY" type="array">
       <obj_property name="ElementShortName">LATENCY[31:0]</obj_property>
       <obj_property name="ObjectShortName">LATENCY[31:0]</obj_property>
    </wvobject>
-   <wvobject fp_name="/tb_am_top/CAR_PERIOD" type="array">
-      <obj_property name="ElementShortName">CAR_PERIOD[31:0]</obj_property>
-      <obj_property name="ObjectShortName">CAR_PERIOD[31:0]</obj_property>
+   <wvobject fp_name="/tb_am_top_filebased/u_dut/clk" type="logic">
+      <obj_property name="ElementShortName">clk</obj_property>
+      <obj_property name="ObjectShortName">clk</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_am_top_filebased/u_dut/rst" type="logic">
+      <obj_property name="ElementShortName">rst</obj_property>
+      <obj_property name="ObjectShortName">rst</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_am_top_filebased/u_dut/ftw_car" type="array">
+      <obj_property name="ElementShortName">ftw_car[31:0]</obj_property>
+      <obj_property name="ObjectShortName">ftw_car[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_am_top_filebased/u_dut/ftw_msg" type="array">
+      <obj_property name="ElementShortName">ftw_msg[31:0]</obj_property>
+      <obj_property name="ObjectShortName">ftw_msg[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_am_top_filebased/u_dut/amp_car" type="array">
+      <obj_property name="ElementShortName">amp_car[11:0]</obj_property>
+      <obj_property name="ObjectShortName">amp_car[11:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_am_top_filebased/u_dut/amp_msg" type="array">
+      <obj_property name="ElementShortName">amp_msg[11:0]</obj_property>
+      <obj_property name="ObjectShortName">amp_msg[11:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_am_top_filebased/u_dut/am_out" type="array">
+      <obj_property name="ElementShortName">am_out[15:0]</obj_property>
+      <obj_property name="ObjectShortName">am_out[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_am_top_filebased/u_dut/car" type="array">
+      <obj_property name="ElementShortName">car[11:0]</obj_property>
+      <obj_property name="ObjectShortName">car[11:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_am_top_filebased/u_dut/msg" type="array">
+      <obj_property name="ElementShortName">msg[11:0]</obj_property>
+      <obj_property name="ObjectShortName">msg[11:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_am_top_filebased/u_dut/car_aligned" type="array">
+      <obj_property name="ElementShortName">car_aligned[11:0]</obj_property>
+      <obj_property name="ObjectShortName">car_aligned[11:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_am_top_filebased/u_dut/env" type="array">
+      <obj_property name="ElementShortName">env[13:0]</obj_property>
+      <obj_property name="ObjectShortName">env[13:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_am_top_filebased/u_dut/car_d1" type="array">
+      <obj_property name="ElementShortName">car_d1[11:0]</obj_property>
+      <obj_property name="ObjectShortName">car_d1[11:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_am_top_filebased/u_dut/PW" type="array">
+      <obj_property name="ElementShortName">PW[31:0]</obj_property>
+      <obj_property name="ObjectShortName">PW[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_am_top_filebased/u_dut/AW" type="array">
+      <obj_property name="ElementShortName">AW[31:0]</obj_property>
+      <obj_property name="ObjectShortName">AW[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_am_top_filebased/u_dut/DW" type="array">
+      <obj_property name="ElementShortName">DW[31:0]</obj_property>
+      <obj_property name="ObjectShortName">DW[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_am_top_filebased/u_dut/OW" type="array">
+      <obj_property name="ElementShortName">OW[31:0]</obj_property>
+      <obj_property name="ObjectShortName">OW[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_am_top_filebased/u_dut/USE_QUARTER_ROM" type="array">
+      <obj_property name="ElementShortName">USE_QUARTER_ROM[31:0]</obj_property>
+      <obj_property name="ObjectShortName">USE_QUARTER_ROM[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_am_top_filebased/u_dut/FULL_MEM_FILE" type="array">
+      <obj_property name="ElementShortName">FULL_MEM_FILE[135:0]</obj_property>
+      <obj_property name="ObjectShortName">FULL_MEM_FILE[135:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_am_top_filebased/u_dut/QUARTER_MEM_FILE" type="array">
+      <obj_property name="ElementShortName">QUARTER_MEM_FILE[159:0]</obj_property>
+      <obj_property name="ObjectShortName">QUARTER_MEM_FILE[159:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/glbl/GTS" type="logic">
+      <obj_property name="ElementShortName">GTS</obj_property>
+      <obj_property name="ObjectShortName">GTS</obj_property>
+   </wvobject>
+   <wvobject fp_name="/glbl/GWE" type="logic">
+      <obj_property name="ElementShortName">GWE</obj_property>
+      <obj_property name="ObjectShortName">GWE</obj_property>
+   </wvobject>
+   <wvobject fp_name="/glbl/PRLD" type="logic">
+      <obj_property name="ElementShortName">PRLD</obj_property>
+      <obj_property name="ObjectShortName">PRLD</obj_property>
+   </wvobject>
+   <wvobject fp_name="/glbl/GRESTORE" type="logic">
+      <obj_property name="ElementShortName">GRESTORE</obj_property>
+      <obj_property name="ObjectShortName">GRESTORE</obj_property>
+   </wvobject>
+   <wvobject fp_name="/glbl/p_up_tmp" type="logic">
+      <obj_property name="ElementShortName">p_up_tmp</obj_property>
+      <obj_property name="ObjectShortName">p_up_tmp</obj_property>
+   </wvobject>
+   <wvobject fp_name="/glbl/PLL_LOCKG" type="logic">
+      <obj_property name="ElementShortName">PLL_LOCKG</obj_property>
+      <obj_property name="ObjectShortName">PLL_LOCKG</obj_property>
+   </wvobject>
+   <wvobject fp_name="/glbl/PROGB_GLBL" type="logic">
+      <obj_property name="ElementShortName">PROGB_GLBL</obj_property>
+      <obj_property name="ObjectShortName">PROGB_GLBL</obj_property>
+   </wvobject>
+   <wvobject fp_name="/glbl/CCLKO_GLBL" type="logic">
+      <obj_property name="ElementShortName">CCLKO_GLBL</obj_property>
+      <obj_property name="ObjectShortName">CCLKO_GLBL</obj_property>
+   </wvobject>
+   <wvobject fp_name="/glbl/FCSBO_GLBL" type="logic">
+      <obj_property name="ElementShortName">FCSBO_GLBL</obj_property>
+      <obj_property name="ObjectShortName">FCSBO_GLBL</obj_property>
+   </wvobject>
+   <wvobject fp_name="/glbl/DO_GLBL" type="array">
+      <obj_property name="ElementShortName">DO_GLBL[3:0]</obj_property>
+      <obj_property name="ObjectShortName">DO_GLBL[3:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/glbl/DI_GLBL" type="array">
+      <obj_property name="ElementShortName">DI_GLBL[3:0]</obj_property>
+      <obj_property name="ObjectShortName">DI_GLBL[3:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/glbl/GSR_int" type="logic">
+      <obj_property name="ElementShortName">GSR_int</obj_property>
+      <obj_property name="ObjectShortName">GSR_int</obj_property>
+   </wvobject>
+   <wvobject fp_name="/glbl/GTS_int" type="logic">
+      <obj_property name="ElementShortName">GTS_int</obj_property>
+      <obj_property name="ObjectShortName">GTS_int</obj_property>
+   </wvobject>
+   <wvobject fp_name="/glbl/PRLD_int" type="logic">
+      <obj_property name="ElementShortName">PRLD_int</obj_property>
+      <obj_property name="ObjectShortName">PRLD_int</obj_property>
+   </wvobject>
+   <wvobject fp_name="/glbl/GRESTORE_int" type="logic">
+      <obj_property name="ElementShortName">GRESTORE_int</obj_property>
+      <obj_property name="ObjectShortName">GRESTORE_int</obj_property>
+   </wvobject>
+   <wvobject fp_name="/glbl/JTAG_TDO_GLBL" type="logic">
+      <obj_property name="ElementShortName">JTAG_TDO_GLBL</obj_property>
+      <obj_property name="ObjectShortName">JTAG_TDO_GLBL</obj_property>
+   </wvobject>
+   <wvobject fp_name="/glbl/JTAG_TCK_GLBL" type="logic">
+      <obj_property name="ElementShortName">JTAG_TCK_GLBL</obj_property>
+      <obj_property name="ObjectShortName">JTAG_TCK_GLBL</obj_property>
+   </wvobject>
+   <wvobject fp_name="/glbl/JTAG_TDI_GLBL" type="logic">
+      <obj_property name="ElementShortName">JTAG_TDI_GLBL</obj_property>
+      <obj_property name="ObjectShortName">JTAG_TDI_GLBL</obj_property>
+   </wvobject>
+   <wvobject fp_name="/glbl/JTAG_TMS_GLBL" type="logic">
+      <obj_property name="ElementShortName">JTAG_TMS_GLBL</obj_property>
+      <obj_property name="ObjectShortName">JTAG_TMS_GLBL</obj_property>
+   </wvobject>
+   <wvobject fp_name="/glbl/JTAG_TRST_GLBL" type="logic">
+      <obj_property name="ElementShortName">JTAG_TRST_GLBL</obj_property>
+      <obj_property name="ObjectShortName">JTAG_TRST_GLBL</obj_property>
+   </wvobject>
+   <wvobject fp_name="/glbl/JTAG_CAPTURE_GLBL" type="logic">
+      <obj_property name="ElementShortName">JTAG_CAPTURE_GLBL</obj_property>
+      <obj_property name="ObjectShortName">JTAG_CAPTURE_GLBL</obj_property>
+   </wvobject>
+   <wvobject fp_name="/glbl/JTAG_RESET_GLBL" type="logic">
+      <obj_property name="ElementShortName">JTAG_RESET_GLBL</obj_property>
+      <obj_property name="ObjectShortName">JTAG_RESET_GLBL</obj_property>
+   </wvobject>
+   <wvobject fp_name="/glbl/JTAG_SHIFT_GLBL" type="logic">
+      <obj_property name="ElementShortName">JTAG_SHIFT_GLBL</obj_property>
+      <obj_property name="ObjectShortName">JTAG_SHIFT_GLBL</obj_property>
+   </wvobject>
+   <wvobject fp_name="/glbl/JTAG_UPDATE_GLBL" type="logic">
+      <obj_property name="ElementShortName">JTAG_UPDATE_GLBL</obj_property>
+      <obj_property name="ObjectShortName">JTAG_UPDATE_GLBL</obj_property>
+   </wvobject>
+   <wvobject fp_name="/glbl/JTAG_RUNTEST_GLBL" type="logic">
+      <obj_property name="ElementShortName">JTAG_RUNTEST_GLBL</obj_property>
+      <obj_property name="ObjectShortName">JTAG_RUNTEST_GLBL</obj_property>
+   </wvobject>
+   <wvobject fp_name="/glbl/JTAG_SEL1_GLBL" type="logic">
+      <obj_property name="ElementShortName">JTAG_SEL1_GLBL</obj_property>
+      <obj_property name="ObjectShortName">JTAG_SEL1_GLBL</obj_property>
+   </wvobject>
+   <wvobject fp_name="/glbl/JTAG_SEL2_GLBL" type="logic">
+      <obj_property name="ElementShortName">JTAG_SEL2_GLBL</obj_property>
+      <obj_property name="ObjectShortName">JTAG_SEL2_GLBL</obj_property>
+   </wvobject>
+   <wvobject fp_name="/glbl/JTAG_SEL3_GLBL" type="logic">
+      <obj_property name="ElementShortName">JTAG_SEL3_GLBL</obj_property>
+      <obj_property name="ObjectShortName">JTAG_SEL3_GLBL</obj_property>
+   </wvobject>
+   <wvobject fp_name="/glbl/JTAG_SEL4_GLBL" type="logic">
+      <obj_property name="ElementShortName">JTAG_SEL4_GLBL</obj_property>
+      <obj_property name="ObjectShortName">JTAG_SEL4_GLBL</obj_property>
+   </wvobject>
+   <wvobject fp_name="/glbl/JTAG_USER_TDO1_GLBL" type="logic">
+      <obj_property name="ElementShortName">JTAG_USER_TDO1_GLBL</obj_property>
+      <obj_property name="ObjectShortName">JTAG_USER_TDO1_GLBL</obj_property>
+   </wvobject>
+   <wvobject fp_name="/glbl/JTAG_USER_TDO2_GLBL" type="logic">
+      <obj_property name="ElementShortName">JTAG_USER_TDO2_GLBL</obj_property>
+      <obj_property name="ObjectShortName">JTAG_USER_TDO2_GLBL</obj_property>
+   </wvobject>
+   <wvobject fp_name="/glbl/JTAG_USER_TDO3_GLBL" type="logic">
+      <obj_property name="ElementShortName">JTAG_USER_TDO3_GLBL</obj_property>
+      <obj_property name="ObjectShortName">JTAG_USER_TDO3_GLBL</obj_property>
+   </wvobject>
+   <wvobject fp_name="/glbl/JTAG_USER_TDO4_GLBL" type="logic">
+      <obj_property name="ElementShortName">JTAG_USER_TDO4_GLBL</obj_property>
+      <obj_property name="ObjectShortName">JTAG_USER_TDO4_GLBL</obj_property>
+   </wvobject>
+   <wvobject fp_name="/glbl/ROC_WIDTH" type="array">
+      <obj_property name="ElementShortName">ROC_WIDTH[31:0]</obj_property>
+      <obj_property name="ObjectShortName">ROC_WIDTH[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/glbl/TOC_WIDTH" type="array">
+      <obj_property name="ElementShortName">TOC_WIDTH[31:0]</obj_property>
+      <obj_property name="ObjectShortName">TOC_WIDTH[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/glbl/GRES_WIDTH" type="array">
+      <obj_property name="ElementShortName">GRES_WIDTH[31:0]</obj_property>
+      <obj_property name="ObjectShortName">GRES_WIDTH[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/glbl/GRES_START" type="array">
+      <obj_property name="ElementShortName">GRES_START[31:0]</obj_property>
+      <obj_property name="ObjectShortName">GRES_START[31:0]</obj_property>
    </wvobject>
 </wave_config>

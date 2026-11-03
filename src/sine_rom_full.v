@@ -3,7 +3,7 @@
 module sine_rom_full #(
     parameter AW = 8,
     parameter DW = 12,
-    parameter MEM_FILE = "sine_full.mem"
+    parameter MEM_FILE = "sine_full_AW8.mem"
 )(
     input  wire                clk,
     input  wire [AW-1:0]       addr,
@@ -15,13 +15,13 @@ module sine_rom_full #(
     reg signed [DW-1:0] rom [0:ROM_DEPTH-1];
     reg signed [DW-1:0] sample_stage1;
 
-    // Doc du lieu bang sin tu file .mem
+    // Load the sine table from the .mem file
     initial begin
         $readmemh(MEM_FILE, rom);
     end
 
-    // Tang thanh ghi 1: tra cuu ROM
-    // Tang thanh ghi 2: dang ky dau ra
+    // Stage 1: table lookup
+    // Stage 2: output register
     always @(posedge clk) begin
         sample_stage1 <= rom[addr];
         sine          <= sample_stage1;

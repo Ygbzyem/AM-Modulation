@@ -1,4 +1,22 @@
 `timescale 1ns / 1ps
+//==========================================================================
+// tb_am_regression.v - every verification case in one simulation run.
+//
+// Set as simulation top in Vivado and Run Behavioral Simulation. It writes
+// rtl_case01.txt ... rtl_case18.txt into the simulator run directory
+// (AM_Modulation_Vivado/AM_Modulation_Vivado.sim/sim_1/behav/xsim/).
+// Then, from the repository root:
+//     python golden_model/verify_rtl.py
+// compares every file with the Python golden model and draws the
+// golden-vs-RTL figures in results/<case>/.
+//
+// Each file starts with a header line holding the exact configuration, so
+// the Python side never has to guess what the RTL was given.
+//
+//   01-07 functional   AW=8 FULL, varying mu / carrier / message
+//   08-13 ROM sweep    AW=8,10,12 x FULL,QUARTER, default stimulus
+//   14-18 edge cases   amplitude limits and tuning-word limits
+//==========================================================================
 module tb_am_regression;
 
     localparam integer NUM_SAMPLES = 10000;
