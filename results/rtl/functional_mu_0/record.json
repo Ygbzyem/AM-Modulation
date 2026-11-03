@@ -1,0 +1,33 @@
+{
+  "index": 1,
+  "case": "functional_mu_0",
+  "source": "regression",
+  "aw": 8,
+  "rom": "FULL",
+  "clock_hz": 100000000,
+  "ftw_car": 42949673,
+  "ftw_msg": 858993,
+  "amp_car": 2000,
+  "amp_msg": 0,
+  "samples": 10000,
+  "latency_dropped": 3,
+  "status": "PASS",
+  "env_min": 2000,
+  "env_max": 2000,
+  "golden_out_min": -2000,
+  "golden_out_max": 1999,
+  "rtl_out_min": -2000,
+  "rtl_out_max": 1999,
+  "sfdr_db": 48.16715762266686,
+  "figures": {
+    "waveform": "rtl_vs_golden.png",
+    "spectrum": "rtl_vs_golden_spectrum.png"
+  },
+  "n_golden": 10000,
+  "n_rtl": 10000,
+  "n_compared": 10000,
+  "mismatches": 0,
+  "max_abs_error": 0,
+  "first_mismatch": null,
+  "passed": true
+}

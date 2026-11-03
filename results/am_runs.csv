@@ -1,2 +1,0 @@
-﻿timestamp,label,aw,rom,ftw_car,f_car_hz,ftw_msg,f_msg_hz,amp_car,amp_msg,mu,bandwidth_hz,env_min,env_max,out_min,out_max,result,mismatches,n_compared,carrier_ratio,lower_ratio,upper_ratio,ideal_ratio,sfdr_db,rtl_file
-2026-11-02 04:07:12,mu05,8,FULL,42949673,1000000.0,858993,19999.99,2000,1000,0.5,39999.98,1000,2999,-2998,2997,PASS,0,10000,1.0,0.25,0.25,0.25,48.07,C:\GitHub\AM-Modulation\results\am_out.txt
